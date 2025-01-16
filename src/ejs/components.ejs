@@ -1,0 +1,34 @@
+<% ROOT_PATH='./'; const EJS_PATH='./'; const PAGE_DATA="components"; %>
+<!DOCTYPE html>
+<html lang="ja">
+<%- include(EJS_PATH + 'common/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
+
+<body>
+  <%- include(EJS_PATH + 'common/_header' ) %>
+  <main>
+    <%- include(EJS_PATH + '/project/_mv') %>
+    <div class="l-inner">
+      <h2>pictureタグでwebP出力</h2>
+      <p>
+        sp画像がないときには、falseとする<br />
+        loading=”lazy”が不要なときには、loading: "eager"とする<br />
+        sp用の画像比率がpc用と同一の場合、spWidth, spHeightは定義しない
+      </p>
+      <br />
+      <div class="dummy__image">
+        <%- include(EJS_PATH + 'component/_picture', { file: "dummy/dummy1", type: "jpg", alt: "alt", sp: true, loading: "lazy", width: 690, height: 460, spWidth: 690, spHeight: 1035 }) %>
+      </div>
+      <br /><br /><br />
+
+      <h2>モーダル</h2><br /><br />
+      <%- include(EJS_PATH + 'project/_p-modal') %>
+      <br /><br /><br />
+
+      <h2>無限ループスライダー</h2><br /><br />
+      <%- include(EJS_PATH + 'project/_p-loop-slider') %>
+    </div>
+  </main>
+  <%- include(EJS_PATH + 'common/_footer' ) %>
+</body>
+
+</html>

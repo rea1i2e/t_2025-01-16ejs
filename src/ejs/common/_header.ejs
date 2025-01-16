@@ -1,0 +1,49 @@
+<% 
+const EJS_PATH = "../";
+const header_nav_items = [
+{
+  href: ROOT_PATH,
+  text: "home",
+},  
+{
+  href: ROOT_PATH + "about/",
+  text: "about",
+},  
+];
+%>
+<header class="l-header p-header">
+  <div class="p-header__inner l-inner">
+    <h1 class="p-header__logo">
+      <a href="<%= ROOT_PATH %>" class="p-header__logo-link">
+        <img src="<%= ROOT_PATH %>assets/images/common/logo.svg" alt="">
+      </a>
+    </h1>
+    <button class="p-header__menu-button c-menu-button" id="js-menu" aria-controls="js-drawer" aria-expanded="false" aria-label="メニューを開閉する">
+      <span></span>
+    </button>
+    <nav class="p-header__pc-nav">
+      <ul class="p-header__pc-nav-items">
+        <% header_nav_items.forEach(function(item) { %>
+        <li class="p-header__pc-nav-item">
+          <a href="<%- item.href %>">
+            <%- item.text %>
+          </a>
+        </li>
+        <% }); %>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
+  <div class="p-drawer__inner l-inner">
+    <ul class="p-drawer__nav-items">
+      <% header_nav_items.forEach(function(item) { %>
+      <li class="p-drawer__nav-item">
+        <a href="<%- item.href %>">
+          <%- item.text %>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+  </div>
+</div>

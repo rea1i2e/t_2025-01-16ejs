@@ -1,0 +1,37 @@
+@use 'global' as *;
+
+@keyframes loop-slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.p-loop-slider__wrap {
+  display: flex;
+  overflow: hidden;
+}
+
+.p-loop-slider__list {
+  display: flex;
+  animation :loop-slide 20s infinite linear 0.5s both;
+  @include mq() {
+    animation-duration: 30s;
+  }
+}
+
+// 画像のサイズ指定はここで。
+.p-loop-slider__item {
+  width: 64vw; // 100vwとするとiPhoneでチラつく。必要な場合は、70vw程度にした上でscaleでサイズ調整する
+  @include mq() {
+    width: 40vw
+  }
+}
+.p-loop-slider__item img{
+   width: 100%;
+   height: auto;
+   aspect-ratio: 3 / 2;
+   object-fit: cover;
+}

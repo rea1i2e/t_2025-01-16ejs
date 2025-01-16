@@ -1,0 +1,77 @@
+@use "global" as *;
+
+.p-modal {
+  position: fixed;
+  z-index: 8887;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  opacity : 0;
+  transition: all 0.3s ease-out;
+}
+
+.p-modal-content__body {
+  position: absolute;
+  top: rem(60);
+  left: rem(20);
+  right: rem(20);
+  overflow-y: auto;
+  max-width: rem(1280);
+  height: 90%;
+  padding: rem(20);
+  background: $white;
+}
+.p-modal-content__top {
+  display: inline-block;
+  position: fixed;
+  top: rem(80);
+  right: rem(46);
+}
+.p-modal-content__close {
+  position: relative;
+  display: inline-block;
+  width: rem(34);
+  height: auto;
+  aspect-ratio: 1 / 1;
+}
+
+.p-modal-content__close::before,
+.p-modal-content__close::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #ED722D;
+  content: "";
+}
+
+.p-modal-content__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.p-modal-content__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.p-modal-content__close:hover,
+.p-modal-content__close:focus {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* is-show */
+.is-show { /* モーダル表示用クラス */
+  visibility: visible;
+  opacity : 1;
+}
+
+/* body固定 */
+body:has(.p-modal.is-show) {
+  overflow: hidden;
+}

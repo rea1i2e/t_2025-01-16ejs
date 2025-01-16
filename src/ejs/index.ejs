@@ -1,0 +1,21 @@
+<% ROOT_PATH='./'; const EJS_PATH='./'; const PAGE_DATA="top"; %>
+<!DOCTYPE html>
+<html lang="ja">
+<%- include(EJS_PATH + 'common/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
+
+<body>
+  <%- include(EJS_PATH + 'common/_header' ) %>
+  <main>
+    <div class="l-inner">
+      <br /><br /><br /><br /><br />
+      <h1>./index.html</h1><br /><br />
+      <h2>コンポーネント表示確認用ページ</h2><br>
+      <div class="" style="text-decoration: underline;">
+        <p><a href="./components.html">./components.html</a></p>
+      </div>
+    </div>
+  </main>
+  <%- include(EJS_PATH + 'common/_footer' ) %>
+</body>
+
+</html>

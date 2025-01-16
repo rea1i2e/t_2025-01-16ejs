@@ -1,0 +1,115 @@
+/* リキッドレイアウト対応 */
+@use "global" as *;
+
+@if $startFrom == sp {
+  //スマホファースト
+  html {
+    //375px~767px
+    font-size: 16px;
+
+    //~375px
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+    }
+
+    @include mq(sm) {
+      font-size: vw(375, 16);
+    }
+
+    @include mq(md) {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+    }
+
+    //inner~max-screen
+    @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: 16px;
+    }
+
+    @include mq(lg) {
+      font-size: 16px;
+    }
+  }
+} @else {
+  //PCファースト
+  html {
+    font-size: 16px;
+
+    @include mq(lg) {
+      font-size: 16px;
+    }
+
+    @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+    }
+
+    @include mq(md) {
+      font-size: 16px;
+    }
+
+    @include mq(sm) {
+      font-size: 16px;
+    }
+
+    //~375px
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+    }
+  }
+}
+
+/* pcの電話番号発信対応 */
+@if $startFrom == sp {
+  a[href^="tel:"] {
+    @include mq() {
+      pointer-events: none;
+    }
+  }
+} @else {
+  a[href^="tel:"] {
+    pointer-events: none;
+    @include mq() {
+      pointer-events: initial;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s;
+}
+
+/* hover指定できるPCを想定したスタイル */
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.7;
+  }
+}
+
+/* hoverが使えないタッチ端末を想定した装飾 */
+@media (hover: none) {
+  a:active {
+    opacity: 0.7;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: rem(60);
+  @include mq() {
+    scroll-padding-top: rem(100);
+  }
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  font-family: $base-font-family;
+  line-height: 1.5;
+}
+
+main {
+  flex: 1;
+}

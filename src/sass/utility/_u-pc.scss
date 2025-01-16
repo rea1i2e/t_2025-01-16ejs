@@ -1,0 +1,19 @@
+@use 'global' as *;
+
+@if $startFrom == sp {
+  //pcで表示
+  .u-pc {
+    display: none;
+    @include mq() {
+      display: block;
+    }
+  }
+} @else {
+  //pcで表示
+  .u-pc {
+    display: block;
+    @include mq() {
+      display: none;
+    }
+  }
+}

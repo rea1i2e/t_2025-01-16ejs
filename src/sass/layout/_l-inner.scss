@@ -1,0 +1,25 @@
+@use "global" as *;
+
+@if $startFrom == sp {
+	.l-inner {
+		margin-inline: auto;
+		max-width: rem($inner-sp + $padding-sp * 2);
+		width: 100%;
+		padding-inline: rem($padding-sp);
+		@include mq(md) {
+			max-width: rem($inner-pc + $padding-pc * 2);
+			padding-inline: rem($padding-pc);
+		}
+	}
+} @else {
+	.l-inner {
+		margin-inline: auto;
+		width: 100%;
+		padding-inline: rem($padding-pc);
+		max-width: rem($inner-pc + $padding-pc * 2);
+		@include mq(md) {
+			max-width: rem($inner-sp + $padding-sp * 2);
+			padding-inline: rem($padding-sp);
+		}
+	}
+}

@@ -1,0 +1,47 @@
+@use "global" as *;
+
+.p-mv {
+  position: relative;
+}
+
+.p-mv__slider {
+}
+
+.p-mv__slider-track {
+}
+
+.p-mv__slider-list {
+}
+
+.p-mv__slider-item {
+}
+
+.p-mv__slider-item img {
+  height: 100vh;
+  min-height: rem(400);
+  object-fit: cover;
+}
+
+.p-mv__copy {
+  position: absolute;
+  inset: 50% 0 auto;
+  z-index: 100;
+  transform: translateY(-50%);
+  @include mq() {
+  }
+}
+
+.p-mv__inner {
+}
+
+.p-mv__main-copy {
+  color: #2f4aa1;
+  // @include mq() {
+  // }
+}
+
+.p-mv__sub-copy {
+  margin-top: rem(16);
+  //   @include mq() {
+  //   }
+}

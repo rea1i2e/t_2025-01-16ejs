@@ -1,0 +1,38 @@
+<%
+ const EJS_PATH = "../";
+ const slideItems = [
+  {
+    file: "dummy/dummy1",
+    type: "png",
+    alt: "",
+    sp: true,
+    loading: "eager",
+    width: 690,
+    height: 460,
+    spWidth: 690,
+    spHeight: 1035,
+  },
+  {
+    file: "dummy/dummy2",
+    type: "png",
+    alt: "",
+    sp: true,
+    loading: "eager",
+    width: 690,
+    height: 1035,
+  },
+]; 
+%>
+<div class="p-loop-slider">
+  <div class="p-loop-slider__wrap">
+    <% for(let i = 0; i < 2; i++) { %>
+    <ul class="p-loop-slider__list">
+      <% slideItems.forEach((item, index) => { %>
+      <li class="p-loop-slider__item">
+        <%- include(EJS_PATH + 'component/_picture', { file: item.file, type: item.type, alt: item.alt, sp: item.sp, loading: item.loading, width: item.width, height: item.height, spWidth: item.spWidth, spHeight: item.spHeight }) %>
+      </li>
+      <% }) %>
+    </ul>
+    <% } %>
+  </div>
+</div>

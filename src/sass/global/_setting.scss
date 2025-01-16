@@ -1,0 +1,22 @@
+@use "sass:math";
+
+// デザインカンプ
+// pc
+// sp
+
+// インナー幅設定
+$inner-pc: 1100;
+$inner-sp: 540;
+// ※キュンパス幅ではなくインナーの幅を指す
+
+// 余白
+$padding-pc: 25;
+$padding-sp: 20;
+
+
+$base-font-family: "";
+$second-font-family: "";
+
+
+$black: #111;
+$white: #fff;

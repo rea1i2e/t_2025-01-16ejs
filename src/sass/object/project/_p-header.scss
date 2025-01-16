@@ -1,0 +1,108 @@
+@use "global" as *;
+
+.p-header {
+  background-color: #ccc; // test
+}
+
+.p-header__inner {
+  display: flex;
+  height: 100%;
+  padding: 0 rem($padding-sp);
+  max-width: initial;
+  @include mq() {
+  }
+}
+
+.p-header__logo {
+  width: rem(40);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  @include mq() {
+  }
+}
+
+.p-header__logo-link {
+  display: block;
+}
+
+.p-header__logo-link img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+.p-header__menu-button {
+  margin-left: auto;
+  @include mq() {
+    display: none;
+  }
+}
+
+.p-header__pc-nav {
+  display: none;
+  @include mq() {
+    display: block;
+    margin-left: auto;
+    height: 100%;
+  }
+}
+
+.p-header__pc-nav-items {
+  height: 100%;
+  display: flex;
+}
+
+.p-header__pc-nav-item {
+  height: 100%;
+}
+
+
+
+.p-header__pc-nav-item a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 rem(16);
+  @include mq() {
+  }
+}
+
+
+
+
+.p-header__menu-button {
+  z-index: 101;
+}
+
+.p-header__drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: auto;
+  transform: translateX(100%);
+  transition: all 0.3s ease-out;
+  @include mq() {
+    left: auto;
+    width: 50%;
+    max-width: calc(896 / 1920 * 100%);
+  }
+}
+
+.p-header__drawer[aria-hidden="false"] {
+  transform: translateX(0);
+}
+
+/* hover指定できるPCを想定したスタイル */
+@media (hover: hover) {
+  .p-header__pc-nav-item a:hover {
+  }
+  
+}
+
+/* hoverが使えないタッチ端末を想定した装飾 */
+@media (hover: none) {
+  .p-header__pc-nav-item a:active {
+  }  
+}
