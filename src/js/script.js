@@ -3,15 +3,19 @@
 ------------------------------ */
 // スクロールバーの幅をCSSに格納する関数
 const updateScrollBarWidth = () => {
-  const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
-  document.documentElement.style.setProperty('--scrollbar-width', `${scrollBarWidth}px`)
-}
+  const scrollBarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+  document.documentElement.style.setProperty(
+    "--scrollbar-width",
+    `${scrollBarWidth}px`
+  );
+};
 
 // debounce関数（指定された時間内に何度も呼び出された場合に、最後の呼び出しのみを実行）
 function debounce(callback, delay) {
   let timeout = null;
 
-  return function(...args) {
+  return function (...args) {
     if (timeout !== null) {
       cancelAnimationFrame(timeout);
     }
@@ -21,8 +25,8 @@ function debounce(callback, delay) {
   };
 }
 
-window.addEventListener('resize', debounce(updateScrollBarWidth))
-window.addEventListener('load', updateScrollBarWidth)
+window.addEventListener("resize", debounce(updateScrollBarWidth));
+window.addEventListener("load", updateScrollBarWidth);
 
 /* ------------------------------
 ドロワーメニュー
@@ -78,7 +82,7 @@ document.addEventListener("click", function (event) {
 });
 
 // ブレイクポイントを超えたとき、ドロワーメニューを閉じる
-window.addEventListener('resize', function() {
+window.addEventListener("resize", function () {
   if (window.innerWidth >= 768) {
     closeDrawerMenu();
   }
@@ -87,13 +91,16 @@ window.addEventListener('resize', function() {
 /* ------------------------------
 トップ・スライダー
 ------------------------------ */
-new Splide( '#js-mv-splide', {
-  type: 'fade',
-  rewind: true,
-  autoplay: true,
-  perPage: 1,
-  perMove: 1,
-  gap: 0,
-  pagination: false,
-  arrows: false,
-} ).mount();
+const mvSplide = document.getElementById("js-mv-splide");
+if (mvSplide) {
+  new Splide("#js-mv-splide", {
+    type: "fade",
+    rewind: true,
+    autoplay: true,
+    perPage: 1,
+    perMove: 1,
+    gap: 0,
+    pagination: false,
+    arrows: false,
+  }).mount();
+}
