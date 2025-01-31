@@ -1,5 +1,6 @@
 <% 
 const EJS_PATH = "../";
+let tag = (PAGE_DATA === 'top') ? 'h1' : 'div';
 const header_nav_items = [
 {
   href: ROOT_PATH,
@@ -13,11 +14,11 @@ const header_nav_items = [
 %>
 <header class="p-header l-header">
   <div class="p-header__inner l-inner">
-    <h1 class="p-header__logo">
+    <<%= tag %> class="p-header__logo">
       <a href="<%= ROOT_PATH %>" class="p-header__logo-link">
         <img src="<%= ROOT_PATH %>assets/images/common/logo.svg" alt="">
       </a>
-    </h1>
+    </<%= tag %>>
     <button class="p-header__menu-button c-menu-button" id="js-menu" aria-controls="js-drawer" aria-expanded="false" aria-label="メニューを開閉する">
       <span></span>
     </button>
