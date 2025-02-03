@@ -83,19 +83,17 @@ const cssSass = () => {
           autoprefixer({
             grid: true,
           }),
-          pixrem({ atrules: true }),
         ])
       )
 
       // CSSプロパティをアルファベット順にソートし、未来のCSS構文を使用可能に
       .pipe(
         postcss([
-          cssdeclsort({
-            order: "alphabetical",
-          }),
-        ]),
-        postcssPresetEnv({ browsers: "last 2 versions" }),
-        combineMq() // 2023/09/08 style.css.map に対応する
+          cssdeclsort({ order: "alphabetical" }),
+          pixrem({ atrules: true }),
+          postcssPresetEnv({ browsers: "last 2 versions" }),
+          combineMq() // 2023/09/08 style.css.map に対応する
+        ])
       )
 
       // ソースマップを書き出し
