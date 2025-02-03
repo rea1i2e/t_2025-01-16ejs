@@ -28,11 +28,19 @@
     @include mq(lg) {
       font-size: 16px;
     }
+
+    @include mq(xl) {
+      font-size: 16px;
+    }
   }
 } @else {
   //PCファースト
   html {
     font-size: 16px;
+
+    @include mq(xl) {
+      font-size: 16px;
+    }
 
     @include mq(lg) {
       font-size: 16px;
