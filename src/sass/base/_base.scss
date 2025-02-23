@@ -13,7 +13,7 @@
     }
 
     @include mq(sm) {
-      font-size: vw(375, 16);
+      font-size: 16px;
     }
 
     @include mq(md) {
