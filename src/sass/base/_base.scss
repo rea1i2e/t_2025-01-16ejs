@@ -20,14 +20,15 @@
       font-size: vw($inner-pc + $padding-pc * 2, 16);
     }
 
+    @include mq(lg) {
+      font-size: 16px;
+    }
+
     //inner~max-screen
     @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
       font-size: 16px;
     }
 
-    @include mq(lg) {
-      font-size: 16px;
-    }
 
     @include mq(xl) {
       font-size: 16px;
@@ -42,12 +43,12 @@
       font-size: 16px;
     }
 
-    @include mq(lg) {
-      font-size: 16px;
-    }
-
     @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
       font-size: vw($inner-pc + $padding-pc * 2, 16);
+    }
+
+    @include mq(lg) {
+      font-size: 16px;
     }
 
     @include mq(md) {
@@ -87,16 +88,13 @@ a {
   transition: opacity 0.3s;
 }
 
-/* hover指定できるPCを想定したスタイル */
-@media (hover: hover) {
-  a:hover {
-    opacity: 0.7;
-  }
+/* フォーカスされている要素を明確に示す */
+a:focus-visible {
+  opacity: 0.7;
 }
 
-/* hoverが使えないタッチ端末を想定した装飾 */
-@media (hover: none) {
-  a:active {
+@media (any-hover: hover) {
+  a:hover {
     opacity: 0.7;
   }
 }
