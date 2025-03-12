@@ -1,34 +1,4 @@
 /* ------------------------------
-スクロールバーの幅をカスタムプロパティ--scrollbar-widthに格納
------------------------------- */
-// スクロールバーの幅をCSSに格納する関数
-const updateScrollBarWidth = () => {
-  const scrollBarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
-  document.documentElement.style.setProperty(
-    "--scrollbar-width",
-    `${scrollBarWidth}px`
-  );
-};
-
-// debounce関数（指定された時間内に何度も呼び出された場合に、最後の呼び出しのみを実行）
-function debounce(callback, delay) {
-  let timeout = null;
-
-  return function (...args) {
-    if (timeout !== null) {
-      cancelAnimationFrame(timeout);
-    }
-    timeout = requestAnimationFrame(() => {
-      callback.apply(this, args);
-    });
-  };
-}
-
-window.addEventListener("resize", debounce(updateScrollBarWidth));
-window.addEventListener("load", updateScrollBarWidth);
-
-/* ------------------------------
 ドロワーメニュー
 ------------------------------ */
 const menuButton = document.getElementById("js-menu");
