@@ -1,0 +1,165 @@
+@use "global" as *;
+
+.p-movie-modal {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.p-movie-modal::before,
+.p-movie-modal::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: auto;
+  transform: translate(-50%, -50%);
+  content: "";
+}
+
+.p-movie-modal::before {
+  width: rem(82);
+  aspect-ratio: 1/1;
+  background: url(../images/mv_round_text.svg) no-repeat center / contain;
+  animation: spin 25s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.p-movie-modal::after {
+  width: rem(25);
+  aspect-ratio: 50/33;
+  background: url(../images/mv_polygon.svg) no-repeat center / contain;
+  transition: background-size 0.3s ease-in-out;
+  @include mq() {
+    background-size: rem(126);
+  }
+}
+
+.p-movie-modal img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background-blend-mode: overlay;
+  background-color: rgba($black, 0.5);
+}
+
+.p-movie-modal__modal {
+  display: none;
+  opacity: 0;
+  // transition: transform 3s ease-in-out;
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+  background-color: pink;
+  // background-color: rgba(0, 0, 0, 0.8);
+  align-items: center;
+  justify-content: center;
+}
+
+.p-movie-modal__modal-content {
+  // position: fixed;
+  // inset: 0;
+  // margin: auto;
+  animation: fadeIn 0.7s ease 0s 1 normal;
+  // position: absolute;
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  max-width: rem(1200);
+  width: calc(100% - rem($padding-sp * 2));
+  @include mq() {
+    width: calc(100% - rem($padding-pc * 2));
+  }
+}
+
+.p-movie-modal__modal-content iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+.p-movie-modal__close {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  line-height: 1;
+  width: 40px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 0.1rem;
+  position: fixed;
+  position: absolute;
+  transform: rotate(45deg);
+  border: none;
+  inset: -20px 0 auto auto;
+  opacity: 0.6;
+  transition: opacity 0.7s ease-in-out;
+}
+
+.p-movie-modal__close:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  transform: rotate(90deg);
+}
+
+.p-movie-modal__close:hover {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* hover指定できるPCを想定したスタイル */
+@media (hover: hover) {
+  .p-movie-modal:hover::after {
+    background-size: rem(69);
+    @include mq() {
+      background-size: rem(138);
+    }
+  }
+}
+
+body:has(modal) {
+  overflow: hidden;
+}
