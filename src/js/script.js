@@ -3,26 +3,23 @@
 ------------------------------ */
 const menuButton = document.getElementById("js-menu");
 const drawerMenu = document.getElementById("js-drawer");
-const anchorLinks = document.querySelectorAll('a[href^="#"]');
-const body = document.body;
-const html = document.documentElement;
+const drawerMenuNav = document.getElementById("js-drawer-nav");
+const drawerAnchorLinks = drawerMenuNav.querySelectorAll('a[href*="#"]');
 
 // ドロワーメニューを展開する処理
 function openDrawerMenu() {
   menuButton.setAttribute("aria-expanded", "true");
   drawerMenu.setAttribute("aria-hidden", "false");
-  body.classList.add("is-drawerActive");
-  body.style.overflow = "hidden";
-  html.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
 }
 
 // ドロワーメニューを閉じる処理
 function closeDrawerMenu() {
   menuButton.setAttribute("aria-expanded", "false");
   drawerMenu.setAttribute("aria-hidden", "true");
-  body.classList.remove("is-drawerActive");
-  body.style.overflow = "visible";
-  html.style.overflow = "visible";
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
 }
 
 // ハンバーガーメニューをクリックした時の処理
@@ -35,20 +32,22 @@ menuButton.addEventListener("click", function () {
 });
 
 // ページ内リンクをクリックしたとき、ドロワーメニューを閉じる
-anchorLinks.forEach(function (link) {
+drawerAnchorLinks.forEach(function (link) {
   link.addEventListener("click", function () {
     closeDrawerMenu();
   });
 });
 
 // ドロワーメニュー以外の要素をクリックしたとき、ドロワーメニューを閉じる
-document.addEventListener("click", function (event) {
+console.log(drawerMenu);
+drawerMenu.addEventListener("click", function (event) {
+  console.log(event.target);
   if (
-    (!drawerMenu || (drawerMenu && !drawerMenu.contains(event.target))) &&
-    (!menuButton || (menuButton && !menuButton.contains(event.target)))
-  ) {
-    closeDrawerMenu();
-  }
+    drawerMenuNav && drawerMenuNav.contains(event.target) ||
+    menuButton && menuButton.contains(event.target)
+  ) return;
+  
+  closeDrawerMenu();
 });
 
 // ブレイクポイントを超えたとき、ドロワーメニューを閉じる
@@ -74,3 +73,40 @@ if (mvSplide) {
     arrows: false,
   }).mount();
 }
+
+
+/* ------------------------------
+モーダル（複数）
+------------------------------ */
+const modalBtns = document.querySelectorAll("[data-target]"); 
+modalBtns.forEach(function (btn) {
+  btn.onclick = function () {
+    var modal = btn.getAttribute("data-target");
+    document.getElementById(modal).classList.add("is-show");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  };
+});
+
+const closeBtns = document.querySelectorAll("[data-modal-close]");
+closeBtns.forEach(function (btn) {
+  btn.onclick = function () {
+    var modal = btn.closest("[data-modal]");
+    modal.classList.remove("is-show");
+    if (document.querySelectorAll(".is-show").length === 0) {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  };
+});
+
+window.onclick = function (event) {
+  if (event.target.getAttribute("data-modal") !== null) {
+    event.target.classList.remove("is-show");
+    if (document.querySelectorAll(".is-show").length === 0) {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  }
+};
+

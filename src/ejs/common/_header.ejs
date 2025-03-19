@@ -10,6 +10,10 @@ const header_nav_items = [
   href: ROOT_PATH + "about/",
   text: "about",
 },  
+{
+  href: ROOT_PATH + "#about",
+  text: "aboutセクション",
+},  
 ];
 %>
 <header class="p-header l-header">
@@ -37,14 +41,16 @@ const header_nav_items = [
 </header>
 <div class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
   <div class="p-drawer__inner l-inner">
-    <ul class="p-drawer__nav-items">
-      <% header_nav_items.forEach(function(item) { %>
-      <li class="p-drawer__nav-item">
-        <a href="<%- item.href %>">
-          <%- item.text %>
-        </a>
-      </li>
-      <% }); %>
-    </ul>
+    <nav class="p-drawer__nav" id="js-drawer-nav">
+      <ul class="p-drawer__nav-items">
+        <% header_nav_items.forEach(function(item) { %>
+        <li class="p-drawer__nav-item">
+          <a href="<%- item.href %>">
+            <%- item.text %>
+          </a>
+        </li>
+        <% }); %>
+      </ul>
+    </nav>
   </div>
 </div>
