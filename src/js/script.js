@@ -3,26 +3,23 @@
 ------------------------------ */
 const menuButton = document.getElementById("js-menu");
 const drawerMenu = document.getElementById("js-drawer");
-const anchorLinks = document.querySelectorAll('a[href^="#"]');
-const body = document.body;
-const html = document.documentElement;
+const drawerMenuNav = document.getElementById("js-drawer-nav");
+const drawerAnchorLinks = drawerMenuNav.querySelectorAll('a[href*="#"]');
 
 // ドロワーメニューを展開する処理
 function openDrawerMenu() {
   menuButton.setAttribute("aria-expanded", "true");
   drawerMenu.setAttribute("aria-hidden", "false");
-  body.classList.add("is-drawerActive");
-  body.style.overflow = "hidden";
-  html.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
 }
 
 // ドロワーメニューを閉じる処理
 function closeDrawerMenu() {
   menuButton.setAttribute("aria-expanded", "false");
   drawerMenu.setAttribute("aria-hidden", "true");
-  body.classList.remove("is-drawerActive");
-  body.style.overflow = "visible";
-  html.style.overflow = "visible";
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
 }
 
 // ハンバーガーメニューをクリックした時の処理
@@ -35,20 +32,22 @@ menuButton.addEventListener("click", function () {
 });
 
 // ページ内リンクをクリックしたとき、ドロワーメニューを閉じる
-anchorLinks.forEach(function (link) {
+drawerAnchorLinks.forEach(function (link) {
   link.addEventListener("click", function () {
     closeDrawerMenu();
   });
 });
 
 // ドロワーメニュー以外の要素をクリックしたとき、ドロワーメニューを閉じる
-document.addEventListener("click", function (event) {
+console.log(drawerMenu);
+drawerMenu.addEventListener("click", function (event) {
+  console.log(event.target);
   if (
-    (!drawerMenu || (drawerMenu && !drawerMenu.contains(event.target))) &&
-    (!menuButton || (menuButton && !menuButton.contains(event.target)))
-  ) {
-    closeDrawerMenu();
-  }
+    drawerMenuNav && drawerMenuNav.contains(event.target) ||
+    menuButton && menuButton.contains(event.target)
+  ) return;
+  
+  closeDrawerMenu();
 });
 
 // ブレイクポイントを超えたとき、ドロワーメニューを閉じる
@@ -75,85 +74,39 @@ if (mvSplide) {
   }).mount();
 }
 
+
 /* ------------------------------
-YouTube再生モーダル
+モーダル（複数）
 ------------------------------ */
-document.addEventListener("DOMContentLoaded", () => {
-  const body = document.body;
-
-  // p-movie-modalのclass名がつく要素を全取得
-  document.querySelectorAll(".p-movie-modal").forEach((imgTag) => {
-    imgTag.addEventListener("click", function () {
-      openModal(imgTag.getAttribute("data-video-id"));
-    });
-  });
-
-  // モーダルの要素を作成
-  let modal = document.createElement("div");
-  modal.id = "modal";
-  modal.className = "p-movie-modal__modal";
-
-  // モーダルの要素をクリックしたら、モーダルを閉じる
-  modal.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      closeModal();
-    }
-  });
-
-  // p-movie-modal__modal-contentの要素を作成
-  let modalContent = document.createElement("div");
-  modalContent.className = "p-movie-modal__modal-content";
-
-  // iframeのYouTube要素を作成
-  let videoPlayer = document.createElement("iframe");
-  videoPlayer.id = "videoPlayer";
-  videoPlayer.width = "560";
-  videoPlayer.height = "315";
-  videoPlayer.frameBorder = "0";
-  videoPlayer.allow =
-    "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
-  videoPlayer.setAttribute("allowfullscreen", "");
-
-  // 閉じるボタンを作成
-  let closeBtn = document.createElement("button");
-  closeBtn.className = "p-movie-modal__close";
-  closeBtn.addEventListener("click", closeModal);
-
-  // モーダルの要素を追加
-  modalContent.appendChild(videoPlayer);
-  modalContent.appendChild(closeBtn);
-  modal.appendChild(modalContent);
-  body.appendChild(modal);
+const modalBtns = document.querySelectorAll("[data-target]"); 
+modalBtns.forEach(function (btn) {
+  btn.onclick = function () {
+    var modal = btn.getAttribute("data-target");
+    document.getElementById(modal).classList.add("is-show");
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+  };
 });
 
-// モーダル関数
-function openModal(videoId) {
-  let modal = document.getElementById("modal");
-  let videoPlayer = document.getElementById("videoPlayer");
+const closeBtns = document.querySelectorAll("[data-modal-close]");
+closeBtns.forEach(function (btn) {
+  btn.onclick = function () {
+    var modal = btn.closest("[data-modal]");
+    modal.classList.remove("is-show");
+    if (document.querySelectorAll(".is-show").length === 0) {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  };
+});
 
-  if (!modal || !videoPlayer) return;
+window.onclick = function (event) {
+  if (event.target.getAttribute("data-modal") !== null) {
+    event.target.classList.remove("is-show");
+    if (document.querySelectorAll(".is-show").length === 0) {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+  }
+};
 
-  videoPlayer.src =
-    "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
-
-  modal.style.display = "flex";
-  modal.style.animation = "fadeIn 0.3s forwards";
-  document.body.style.overflow = "hidden";
-}
-
-// モーダルを閉じる関数を作成
-function closeModal() {
-  let modal = document.getElementById("modal");
-  let videoPlayer = document.getElementById("videoPlayer");
-
-  if (!modal || !videoPlayer) return;
-
-  modal.style.animation = "fadeOut 0.3s forwards";
-
-  setTimeout(() => {
-    videoPlayer.src = "";
-    modal.style.display = "none";
-  }, 700);
-
-  document.body.style.overflow = "visible";
-}

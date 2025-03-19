@@ -8,6 +8,10 @@
 // .p-drawer__inner {
 // }
 
+.p-drawer__nav {
+  background-color: pink; // test
+}
+
 // .p-drawer__nav-items {
 // }
 
@@ -18,16 +22,4 @@
   display: flex;
   gap: rem(10);
   padding: rem(10);
-}
-
-/* hover指定できるPCを想定したスタイル */
-@media (hover: hover) {
-  .p-drawer__nav-item a:hover {
-  }
-}
-
-/* hoverが使えないタッチ端末を想定した装飾 */
-@media (hover: none) {
-  .p-drawer__nav-item a:active {
-  }
 }
