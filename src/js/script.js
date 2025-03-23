@@ -2,22 +2,22 @@
 ドロワーメニュー
 ------------------------------ */
 const menuButton = document.getElementById("js-menu");
-const drawerMenu = document.getElementById("js-drawer");
-const drawerMenuNav = document.getElementById("js-drawer-nav");
-const drawerAnchorLinks = drawerMenuNav.querySelectorAll('a[href*="#"]');
+const drawer = document.getElementById("js-drawer");
+const drawerMenu = document.getElementById("js-drawer-menu");
+const drawerAnchorLinks = drawerMenu.querySelectorAll('a[href*="#"]');
 
 // ドロワーメニューを展開する処理
-function openDrawerMenu() {
+function openDrawer() {
   menuButton.setAttribute("aria-expanded", "true");
-  drawerMenu.setAttribute("aria-hidden", "false");
+  drawer.setAttribute("aria-hidden", "false");
   document.documentElement.style.overflow = "hidden";
   document.body.style.overflow = "hidden";
 }
 
 // ドロワーメニューを閉じる処理
-function closeDrawerMenu() {
+function closeDrawer() {
   menuButton.setAttribute("aria-expanded", "false");
-  drawerMenu.setAttribute("aria-hidden", "true");
+  drawer.setAttribute("aria-hidden", "true");
   document.documentElement.style.overflow = "";
   document.body.style.overflow = "";
 }
@@ -25,37 +25,36 @@ function closeDrawerMenu() {
 // ハンバーガーメニューをクリックした時の処理
 menuButton.addEventListener("click", function () {
   if (menuButton.getAttribute("aria-expanded") === "true") {
-    closeDrawerMenu();
+    closeDrawer();
   } else {
-    openDrawerMenu();
+    openDrawer();
   }
 });
 
 // ページ内リンクをクリックしたとき、ドロワーメニューを閉じる
 drawerAnchorLinks.forEach(function (link) {
   link.addEventListener("click", function () {
-    closeDrawerMenu();
+    closeDrawer();
   });
 });
 
 // ドロワーメニュー以外の要素をクリックしたとき、ドロワーメニューを閉じる
-console.log(drawerMenu);
-drawerMenu.addEventListener("click", function (event) {
-  console.log(event.target);
+drawer.addEventListener("click", function (event) {
   if (
-    drawerMenuNav && drawerMenuNav.contains(event.target) ||
+    drawerMenu && drawerMenu.contains(event.target) ||
     menuButton && menuButton.contains(event.target)
   ) return;
   
-  closeDrawerMenu();
+  closeDrawer();
 });
 
 // ブレイクポイントを超えたとき、ドロワーメニューを閉じる
 window.addEventListener("resize", function () {
   if (window.innerWidth >= 768) {
-    closeDrawerMenu();
+    closeDrawer();
   }
 });
+
 
 /* ------------------------------
 トップ・スライダー
