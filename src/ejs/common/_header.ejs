@@ -39,9 +39,8 @@ const header_nav_items = [
     </nav>
   </div>
 </header>
-<div class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
+<nav class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
   <div class="p-drawer__inner l-inner">
-    <nav class="p-drawer__nav">
       <ul class="p-drawer__nav-items" id="js-drawer-menu">
         <% header_nav_items.forEach(function(item) { %>
         <li class="p-drawer__nav-item">
@@ -51,6 +50,5 @@ const header_nav_items = [
         </li>
         <% }); %>
       </ul>
-    </nav>
   </div>
-</div>
+</nav>

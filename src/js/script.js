@@ -3,8 +3,6 @@
 ------------------------------ */
 const menuButton = document.getElementById("js-menu");
 const drawer = document.getElementById("js-drawer");
-// const drawerMenu = document.getElementById("js-drawer");
-// const drawerMenuNav = document.getElementById("js-drawer-nav");
 const drawerMenu = document.getElementById("js-drawer-menu");
 const drawerAnchorLinks = drawerMenu.querySelectorAll('a[href*="#"]');
 
