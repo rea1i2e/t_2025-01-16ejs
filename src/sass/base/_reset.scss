@@ -16,6 +16,8 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p,
 ul,
 ol,
@@ -44,10 +46,6 @@ img {
   width: 100%;
 }
 
-/* Natural flow and rhythm in articles by default */
-article > * + * {
-  margin-top: 1em;
-}
 
 /* Inherit fonts for inputs and buttons */
 input,
@@ -97,4 +95,17 @@ select {
 
 select::-ms-expand {
   display: none;
+}
+
+iframe {
+  width: 100%;
+}
+
+em {
+  font-style: normal;
+}
+
+button {
+  padding: 0;
+  color: inherit;
 }

@@ -1,4 +1,4 @@
-<% const EJS_PATH = "../"; %>
+<% const EJS_PATH = "../"; DOMAIN = "https://rea1i2e.net/"%>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -7,22 +7,22 @@
   <title><%= page['title'] %></title>
   <meta name="description" content="<%= page['description'] %>" />
   <meta property="og:site_name" content="<%= page['title'] %>" />
-  <meta property="og:url" content="<%= page['url'] %>" />
+  <meta property="og:url" content="<%= DOMAIN + page['path'] %>" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="<%= page['title'] %>" />
   <meta property="og:description" content="<%= page['description'] %>" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:image" content="<%= page['url'] %>ogp.jpg" />
+  <meta property="og:image" content="<%= DOMAIN + page['path'] %>ogp.jpg" />
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="">
   <meta name="twitter:title" content="<%= page['title'] %>">
   <meta name="twitter:description" content="<%= page['description'] %>">
-  <meta name="twitter:image:src" content="<%= page['url'] %>ogp.jpg">
+  <meta name="twitter:image:src" content="<%= DOMAIN + page['path'] %>ogp.jpg">
   <!-- その他画像関連 -->
   <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <!-- canonicalタグ -->
-  <link rel="canonical" href="<%= page['url'] %>">
+  <link rel="canonical" href="<%= DOMAIN + page['path'] %>">
   <!-- css -->
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide-core.min.css' integrity='sha512-cSogJ0h5p3lhb//GYQRKsQAiwRku2tKOw/Rgvba47vg0+iOFrQ94iQbmAvRPF5+qkF8+gT7XBct233jFg1cBaQ==' crossorigin='anonymous'/>
   <link rel="stylesheet" href="<%= ROOT_PATH %>assets/css/style.css?ver=<%= new Date().getTime() %>" />

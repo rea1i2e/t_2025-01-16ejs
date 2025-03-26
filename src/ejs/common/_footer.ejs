@@ -1,24 +1,18 @@
 <%
 const EJS_PATH = "../";
-const footer_nav_items = [
-{
-  href: ROOT_PATH,
-  text: "home",
-},  
-{
-  href: ROOT_PATH + "about/",
-  text: "about",
-},  ];
+include(EJS_PATH + '/common/_nav-items') ;
 %>
 <div class="p-footer l-footer">
   <div class="p-footer__inner l-inner">
     <ul class="p-footer__nav-items">
-      <% footer_nav_items.forEach(function(item) { %>
-        <li class="p-footer__nav-item">
-          <a href="<%= item.href %>"><%= item.text %></a></li>
+      <% nav_items.forEach(function(item) { %>
+      <li class="p-footer__nav-item">
+        <a href="<%= item.href %>" <%- typeof blank !== 'undefined' ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+          <%= item.text %>
+        </a>
+      </li>
       <% }); %>
     </ul>
-
     <p class="p-footer__copyrigh">
       <small>copyright</small>
     </p>

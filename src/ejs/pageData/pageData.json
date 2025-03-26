@@ -1,17 +1,17 @@
 {
-  "components": {
-    "title": "コンポーネントページ",
-    "description": "コンポーネント表示確認用ページ",
-    "url": "https://xxx.com/compontens.html"
-  },
   "top": {
     "title": "トップページタイトル",
     "description": "トップページディスクリプション",
-    "url": "https://xxx.com"
+    "path": ""
+  },
+  "components": {
+    "title": "コンポーネントページ",
+    "description": "コンポーネント表示確認用ページ",
+    "path": "compontens.html"
   },
   "about": {
     "title": "aboutページ",
     "description": "aboutページディスクリプション",
-    "url": "https://xxx.com/about/"
+    "path": "about/"
   }
 }

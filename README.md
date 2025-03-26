@@ -22,6 +22,10 @@
   - font-sizeは、maxrem()の単位を使うことで、10px未満にならないように指定できます。
   - picture.ejsを使うことで、pictureタグを出力可能です。
   - src/root/内にファイルを設置すると、dist直下にコピーされます。（画像やJSファイルなど圧縮せずそのまま設置したいとき）
+  - サイト内のパス指定（相対パス） href="<% ROOT_PATH + json[`jsonファイルで指定したページのキー`][`path`] %>"
+  - 例：<% ROOT_PATH + json[`components`][`path`] %>
+  - サイト外のパス指定（絶対パス） href="<% DOMAIN + json[`jsonファイルで指定したページのキー`][`path`] %>"
+  - 例：<% DOMAIN + json[`about`][`path`] %>
   - 詳細は、以下のNotionページで説明しています。
 https://rea1i2e.notion.site/EJS-17d0f4d891158097b04cf986ebe3078f?pvs=4
   
