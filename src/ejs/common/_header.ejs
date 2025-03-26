@@ -1,20 +1,7 @@
 <% 
 const EJS_PATH = "../";
 let tag = (PAGE_DATA === 'top') ? 'h1' : 'div';
-const header_nav_items = [
-{
-  href: ROOT_PATH,
-  text: "home",
-},  
-{
-  href: ROOT_PATH + "about/",
-  text: "about",
-},  
-{
-  href: ROOT_PATH + "#about",
-  text: "aboutセクション",
-},  
-];
+include(EJS_PATH + '/common/_nav-items') ;
 %>
 <header class="p-header l-header">
   <div class="p-header__inner l-inner">
@@ -28,9 +15,9 @@ const header_nav_items = [
     </button>
     <nav class="p-header__pc-nav">
       <ul class="p-header__pc-nav-items">
-        <% header_nav_items.forEach(function(item) { %>
+        <% nav_items.forEach(function(item) { %>
         <li class="p-header__pc-nav-item">
-          <a href="<%- item.href %>">
+          <a href="<%- item.href %>"<%- typeof blank !== 'undefined' ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
             <%- item.text %>
           </a>
         </li>
@@ -42,7 +29,7 @@ const header_nav_items = [
 <nav class="l-drawer p-drawer" id="js-drawer" aria-hidden="true">
   <div class="p-drawer__inner l-inner">
       <ul class="p-drawer__nav-items" id="js-drawer-menu">
-        <% header_nav_items.forEach(function(item) { %>
+        <% nav_items.forEach(function(item) { %>
         <li class="p-drawer__nav-item">
           <a href="<%- item.href %>">
             <%- item.text %>

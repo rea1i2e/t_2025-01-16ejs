@@ -1,0 +1,7 @@
+<%
+  const EJS_PATH = "../";
+  const tagName = typeof tag === 'undefined' || !tag ? 'h3' : tag;
+  const headingModifier = typeof modifier !== 'undefined' && modifier ? `c-sub-heading--${modifier}` : '';
+  const headingElement = typeof element !== 'undefined' && element ? `${element}__heading ` : '';
+%>
+<<%- tagName %> class="<%= headingElement %>c-sub-heading <%= headingModifier %>"><%- text %></<%- tagName %>>
