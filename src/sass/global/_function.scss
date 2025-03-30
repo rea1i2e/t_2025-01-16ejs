@@ -34,3 +34,8 @@
 @function maxrem($pixels) {
   @return max(math.div($pixels, 16) * 1rem, 10px);
 }
+
+// ピクパ時は、remに変換しない
+// @function rem($pixels) {
+//   @return #{$pixels}px;
+// }
