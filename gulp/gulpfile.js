@@ -23,6 +23,11 @@ const webp = require("gulp-webp"); //webp変換
 const pixrem = require("pixrem");
 // 2023/09/08 style.css.map に対応する
 const combineMq = require("postcss-combine-media-query");
+const ejs = require("gulp-ejs");
+const replace = require("gulp-replace");
+const htmlbeautify = require("gulp-html-beautify");
+const srcEjsDir = "../src/ejs";
+const fs = require("fs"); //JSONファイル操作用
 
 // 読み込み先
 const srcPath = {
@@ -111,12 +116,6 @@ const cssSass = () => {
 };
 
 //ejsのコンパイル
-const ejs = require("gulp-ejs");
-const replace = require("gulp-replace");
-const htmlbeautify = require("gulp-html-beautify");
-const srcEjsDir = "../src/ejs";
-const fs = require("fs"); //JSONファイル操作用
-
 const ejsCompile = (done) => {
   var jsonFile = "../src/ejs/pageData/pageData.json",
     json = JSON.parse(fs.readFileSync(jsonFile, "utf8"));
@@ -140,8 +139,8 @@ const ejsCompile = (done) => {
     .pipe(ejs({}))
     // 拡張子を.htmlに変更
     .pipe(rename({ extname: ".html" }))
-    // 空白行を削除
-    .pipe(replace(/^[ \t]*\n/gim, ""))
+    // 空白行を削除（GTMスクリプト以外）
+    .pipe(replace(/^(?!.*GTM-PW9R494W)[ \t]*\n/gm, ""))
     // HTMLファイルを整形
     .pipe(
       htmlbeautify({
@@ -150,6 +149,7 @@ const ejsCompile = (done) => {
         max_preserve_newlines: 0, // 連続改行の最大数
         preserve_newlines: false, // 改行を維持するかどうか
         extra_liners: [], // 追加の改行を挿入する要素
+        unformatted: ['script'] // scriptタグの内容は整形しない
       })
     )
     // コンパイル済みのHTMLファイルを出力先に保存
