@@ -7,7 +7,7 @@
   "components": {
     "title": "コンポーネントページ",
     "description": "コンポーネント表示確認用ページ",
-    "path": "compontens.html"
+    "path": "components.html"
   },
   "about": {
     "title": "aboutページ",

@@ -16,6 +16,17 @@
 - `srcフォルダ`内に入力した情報は自動的に`distフォルダ`に反映されます
 - `distフォルダ`はアップロードするファイルなので編集は厳禁
 
+## JavaScriptのバンドル設定
+- `src/js/`配下のJavaScriptファイルは、webpackでバンドルされます
+- エントリーポイントは`src/js/index.js`です
+- バンドルされたファイルは`dist/assets/js/bundle.js`に出力されます
+- モジュール分割の例：
+  - `src/js/index.js` - メインのエントリーポイント
+  - `src/js/_drawer.js` - ドロワーメニュー関連のモジュール
+  - `src/js/_slider.js` - スライダー関連のモジュール
+  - `src/js/_modal.js` - モーダル関連のモジュール
+  - アンダースコア（_）で始まるファイルは、モジュールファイルとして扱われます
+
 ## テンプレートファイルの特徴
   - src/sass/global/_breakpoints.scssにある変数を`pc` or `sp`に設定することで、spファースト・pcファーストの切り替えが可能です。（初期値：`sp`）
   - サイズ指定は、原則rem()を使います
@@ -23,9 +34,9 @@
   - picture.ejsを使うことで、pictureタグを出力可能です。
   - src/root/内にファイルを設置すると、dist直下にコピーされます。（画像やJSファイルなど圧縮せずそのまま設置したいとき）
   - サイト内のパス指定（相対パス） href="<% ROOT_PATH + json[`jsonファイルで指定したページのキー`][`path`] %>"
-  - 例：<% ROOT_PATH + json[`components`][`path`] %>
-  - サイト外のパス指定（絶対パス） href="<% DOMAIN + json[`jsonファイルで指定したページのキー`][`path`] %>"
-  - 例：<% DOMAIN + json[`about`][`path`] %>
+  - 例：<%- ROOT_PATH + json[`components`][`path`] %>
+  - サイト外のパス指定（絶対パス） href="<%- DOMAIN + json[`jsonファイルで指定したページのキー`][`path`] %>"
+  - 例：<%- DOMAIN + json[`about`][`path`] %>
   - 詳細は、以下のNotionページで説明しています。
 https://rea1i2e.notion.site/EJS-17d0f4d891158097b04cf986ebe3078f?pvs=4
   
