@@ -28,6 +28,9 @@ const replace = require("gulp-replace");
 const htmlbeautify = require("gulp-html-beautify");
 const srcEjsDir = "../src/ejs";
 const fs = require("fs"); //JSONファイル操作用
+const webpack = require("webpack");
+const webpackStream = require("webpack-stream");
+const named = require("vinyl-named");
 
 // 読み込み先
 const srcPath = {
@@ -199,26 +202,41 @@ const imgImagemin = () => {
   );
 };
 
-// js圧縮
-const jsBabel = () => {
-  // JavaScriptファイルを指定
-  return (
-    src(srcPath.js)
-      // エラーハンドリングを設定
-      .pipe(
-        plumber({
-          errorHandler: notify.onError("Error: <%= error.message %>"),
-        })
-      )
-      // Babelでトランスパイル（ES6からES5へ変換）
-      .pipe(
-        babel({
-          presets: ["@babel/preset-env"],
-        })
-      )
-      // 圧縮済みのファイルを出力先に保存
-      .pipe(dest(destPath.js))
-  );
+// jsバンドル
+const jsWebpack = () => {
+  return src(srcPath.js)
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>"),
+    }))
+    .pipe(named())
+    .pipe(webpackStream({
+      mode: "development",
+      devtool: "source-map",
+      entry: {
+        index: "../src/js/index.js"
+      },
+      output: {
+        filename: "bundle.js"
+      },
+      module: {
+        rules: [
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"]
+              }
+            }
+          }
+        ]
+      },
+      resolve: {
+        extensions: [".js"]
+      }
+    }))
+    .pipe(dest(destPath.js));
 };
 
 const copyRootFiles = () => {
@@ -246,7 +264,7 @@ const clean = () => {
 // ファイルの監視
 const watchFiles = () => {
   watch(srcPath.css, series(cssSass, browserSyncReload));
-  watch(srcPath.js, series(jsBabel, browserSyncReload));
+  watch(srcPath.js, series(jsWebpack, browserSyncReload));
   watch(srcPath.img, series(imgImagemin, browserSyncReload));
   watch(srcPath.ejs, series(ejsCompile, browserSyncReload));
   watch(srcPath.rt, series(copyRootFiles, browserSyncReload));
@@ -254,9 +272,12 @@ const watchFiles = () => {
 
 // ブラウザシンク付きの開発用タスク
 exports.default = series(
-  series(cssSass, jsBabel, imgImagemin, ejsCompile, copyRootFiles),
+  series(cssSass, jsWebpack, imgImagemin, ejsCompile, copyRootFiles),
   parallel(watchFiles, browserSyncFunc)
 );
 
 // 本番用タスク
-exports.build = series(clean, cssSass, jsBabel, imgImagemin, ejsCompile, copyRootFiles);
+exports.build = series(clean, cssSass, jsWebpack, imgImagemin, ejsCompile, copyRootFiles);
+
+// タスクをエクスポート
+exports.jsWebpack = jsWebpack;
