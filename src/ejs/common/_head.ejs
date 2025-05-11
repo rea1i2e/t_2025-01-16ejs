@@ -4,32 +4,32 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no" />
   <!-- meta情報 -->
-  <title><%= page['title'] %></title>
-  <meta name="description" content="<%= page['description'] %>" />
-  <meta property="og:site_name" content="<%= page['title'] %>" />
-  <meta property="og:url" content="<%= DOMAIN + page['path'] %>" />
+  <title><%- page['title'] %></title>
+  <meta name="description" content="<%- page['description'] %>" />
+  <meta property="og:site_name" content="<%- page['title'] %>" />
+  <meta property="og:url" content="<%- DOMAIN + page['path'] %>" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="<%= page['title'] %>" />
-  <meta property="og:description" content="<%= page['description'] %>" />
+  <meta property="og:title" content="<%- page['title'] %>" />
+  <meta property="og:description" content="<%- page['description'] %>" />
   <meta property="og:locale" content="ja_JP" />
-  <meta property="og:image" content="<%= DOMAIN + page['path'] %>ogp.jpg" />
+  <meta property="og:image" content="<%- DOMAIN %>ogp.png" />
   <meta name="twitter:card" content="summary_large_image">
   <%# <meta name="twitter:site" content=""> %>
-  <meta name="twitter:title" content="<%= page['title'] %>">
-  <meta name="twitter:description" content="<%= page['description'] %>">
-  <meta name="twitter:image:src" content="<%= DOMAIN + page['path'] %>ogp.jpg">
+  <meta name="twitter:title" content="<%- page['title'] %>">
+  <meta name="twitter:description" content="<%- page['description'] %>">
+  <meta name="twitter:image:src" content="<%- DOMAIN %>ogp.png">
   <!-- その他画像関連 -->
   <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
   <!-- canonicalタグ -->
-  <link rel="canonical" href="<%= DOMAIN + page['path'] %>">
+  <link rel="canonical" href="<%- DOMAIN + page['path'] %>">
   <!-- css -->
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/css/splide-core.min.css' integrity='sha512-cSogJ0h5p3lhb//GYQRKsQAiwRku2tKOw/Rgvba47vg0+iOFrQ94iQbmAvRPF5+qkF8+gT7XBct233jFg1cBaQ==' crossorigin='anonymous'/>
-  <link rel="stylesheet" href="<%= ROOT_PATH %>assets/css/style.css?ver=<%= new Date().getTime() %>" />
+  <link rel="stylesheet" href="<%- ROOT_PATH %>assets/css/style.css?ver=<%- new Date().getTime() %>" />
   <!-- JavaScript -->
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/splidejs/4.1.4/js/splide.min.js' integrity='sha512-4TcjHXQMLM7Y6eqfiasrsnRCc8D/unDeY1UGKGgfwyLUCTsHYMxF7/UHayjItKQKIoP6TTQ6AMamb9w2GMAvNg==' crossorigin='anonymous'></script>
-  <script defer src="<%= ROOT_PATH %>assets/js/script.js?var=<%= new Date().getTime() %>"></script>
+  <script defer src="<%- ROOT_PATH %>assets/js/script.js?var=<%- new Date().getTime() %>"></script>
   <!-- Googleフォント -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
