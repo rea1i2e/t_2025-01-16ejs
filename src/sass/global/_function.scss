@@ -13,9 +13,19 @@
   @return math.div($size, $window_width) * 100vw;
 }
 
-// 指定した画面幅の状態を100vwとした場合にvwの単位に変換
-// マイナスの値が入力された場合の処理を追加
+// 画面幅375pxの状態を基準にvw変換
 @function vwl($size) {
+	@return math.div($size, 375) * 100vw;
+}
+
+// 画面幅1920pxの状態を基準にvw変換
+@function vws($size) {
+	@return math.div($size, 1920) * 100vw;
+}
+
+
+// 画面幅1920pxの状態を基準にvw変換（1920pxの状態異常には拡大しない）
+@function maxvwl($size) {
   @if $size < 0 {
     // マイナスの値が入力された場合
     @return max((math.div($size, 1920) * 100vw), #{$size}px);
@@ -24,6 +34,7 @@
     @return min((math.div($size, 1920) * 100vw), #{$size}px);
   }
 }
+
 
 // remへの計算式（16pxを基準としている。10pxを基準とする場合は16を10に変更する）
 @function rem($pixels) {
