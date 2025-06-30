@@ -2,76 +2,84 @@
 
 .p-modal {
   position: fixed;
+  inset: 0;
   z-index: 8887;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  // overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
   visibility: hidden;
-  opacity : 0;
+  opacity: 0;
   transition: all 0.3s ease-out;
 }
 
-.p-modal-content__body {
+.p-modal__body {
+  margin-inline: auto;
   position: absolute;
-  top: rem(60);
-  left: rem(20);
-  right: rem(20);
+  inset: rem(60) rem(20);
   overflow-y: auto;
-  max-width: rem(1280);
-  height: 90%;
-  padding: rem(20);
+  max-width: rem($inner-sp + $padding-sp * 2);
   background: $white;
+  @include mq() {
+    max-width: rem($inner-pc + $padding-pc * 2);
+  }
 }
-.p-modal-content__top {
-  display: inline-block;
+
+.p-modal__top {
+  margin-inline: auto;
   position: fixed;
-  top: rem(80);
-  right: rem(46);
+  inset: auto rem($padding-sp);
+  max-width: rem($inner-sp + $padding-sp * 2);
+  text-align: right;
+  pointer-events: none;
+  padding-top: rem(10);
+  padding-right: rem(10);
+
+  @include mq() {
+    inset: auto rem($padding-pc);
+    max-width: rem($inner-pc + $padding-pc * 2);
+  }
 }
-.p-modal-content__close {
+.p-modal__close {
   position: relative;
   display: inline-block;
   width: rem(34);
   height: auto;
   aspect-ratio: 1 / 1;
+  pointer-events: all;
 }
 
-.p-modal-content__close::before,
-.p-modal-content__close::after {
+.p-modal__close::before,
+.p-modal__close::after {
   position: absolute;
   top: 50%;
   left: 50%;
   display: block;
   width: 100%;
   height: 2px;
-  background-color: #ED722D;
+  background-color: #ed722d;
   content: "";
 }
 
-.p-modal-content__close::before {
+.p-modal__close::before {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-.p-modal-content__close::after {
+.p-modal__close::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
-.p-modal-content__close:hover,
-.p-modal-content__close:focus {
+.p-modal__close:hover,
+.p-modal__close:focus {
   text-decoration: none;
   cursor: pointer;
 }
 
-/* is-show */
-.is-show { /* モーダル表示用クラス */
-  visibility: visible;
-  opacity : 1;
+.p-modal__content {
+  padding: rem(20);
 }
 
-/* body固定 */
-body:has(.p-modal.is-show) {
-  overflow: hidden;
+/* is-show */
+.is-show {
+  /* モーダル表示用クラス */
+  visibility: visible;
+  opacity: 1;
 }
