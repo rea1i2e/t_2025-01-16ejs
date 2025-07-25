@@ -66,6 +66,18 @@
   }
 }
 
+:root {
+  --base-font-family: "";
+
+  --color-black: #1a1a1a;
+  --color-white: #f7f8f8;
+
+  --header-height: #{rem(60)};
+  @include mq() {
+    --header-height: #{rem(100)};
+  }
+}
+
 /* pcの電話番号発信対応 */
 @if $startFrom == sp {
   a[href^="tel:"] {
@@ -101,10 +113,7 @@ a:focus-visible {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: rem(60);
-  @include mq() {
-    scroll-padding-top: rem(100);
-  }
+  scroll-padding-top: var(--header-height);
 }
 
 body {
@@ -112,7 +121,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   text-rendering: optimizeSpeed;
-  font-family: $base-font-family;
+  font-family: var(--base-font-family);
   line-height: 1.5;
 }
 
@@ -120,6 +129,3 @@ main {
   flex: 1;
 }
 
-img {
-  height: auto;
-}
