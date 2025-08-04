@@ -1,4 +1,5 @@
 const { src, dest, watch, series, parallel } = require("gulp"); // Gulpの基本関数をインポート
+const path = require("path"); // パス操作のためのモジュール
 const sass = require("gulp-sass")(require("sass")); // SCSSをCSSにコンパイルするためのモジュール
 const plumber = require("gulp-plumber"); // エラーが発生してもタスクを続行するためのモジュール
 const notify = require("gulp-notify"); // エラーやタスク完了の通知を表示するためのモジュール
@@ -229,11 +230,17 @@ const jsWebpack = () => {
                 presets: ["@babel/preset-env"]
               }
             }
+          },
+          // CSSローダーの設定を追加
+          {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
           }
         ]
       },
       resolve: {
-        extensions: [".js"]
+        extensions: [".js"],
+        modules: ["node_modules", path.resolve(__dirname, "node_modules")]
       }
     }))
     .pipe(dest(destPath.js));
