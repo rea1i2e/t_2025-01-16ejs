@@ -1,10 +1,10 @@
 <% PAGE_DATA="about"; ROOT_PATH='../'; const EJS_PATH='../'; %>
 <!DOCTYPE html>
 <html lang="ja">
-<%- include(EJS_PATH + 'common/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
+<%- include(EJS_PATH + 'components/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
 
 <body>
-  <%- include(EJS_PATH + 'common/_header' ) %>
+  <%- include(EJS_PATH + 'components/_header' ) %>
   <main>
     <main>
       <div class="l-inner">
@@ -13,7 +13,7 @@
       </div>
     </main>
   </main>
-  <%- include(EJS_PATH + 'common/_footer' ) %>
+  <%- include(EJS_PATH + 'components/_footer' ) %>
 </body>
 
 </html>

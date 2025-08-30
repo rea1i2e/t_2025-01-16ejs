@@ -29,7 +29,7 @@
     <ul class="p-loop-slider__list">
       <% slideItems.forEach((item, index) => { %>
       <li class="p-loop-slider__item">
-        <%- include(EJS_PATH + 'component/_picture', { file: item.file, type: item.type, alt: item.alt, sp: item.sp, loading: item.loading, width: item.width, height: item.height, spWidth: item.spWidth, spHeight: item.spHeight }) %>
+        <%- include(EJS_PATH + 'components/_picture', { file: item.file, type: item.type, alt: item.alt, sp: item.sp, loading: item.loading, width: item.width, height: item.height, spWidth: item.spWidth, spHeight: item.spHeight }) %>
       </li>
       <% }) %>
     </ul>

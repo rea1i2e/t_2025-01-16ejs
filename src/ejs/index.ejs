@@ -1,16 +1,17 @@
 <% PAGE_DATA="top"; ROOT_PATH='./'; const EJS_PATH='./';%>
 <!DOCTYPE html>
 <html lang="ja">
-<%- include(EJS_PATH + 'common/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
+<%- include(EJS_PATH + 'components/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
 
 <body>
-  <%- include(EJS_PATH + 'common/_header' ) %>
+  <%- include(EJS_PATH + 'components/_header' ) %>
   <main>
+    <%- include(EJS_PATH + 'components/_mv') %>
     <div class="l-inner">
       <br /><br /><br /><br /><br />
       <h1>./index.html</h1><br /><br />
       <h2>dialog要素によるモーダル</h2>
-      <%- include(EJS_PATH + 'project/_p-dialog') %>
+      <%- include(EJS_PATH + 'components/_p-dialog') %>
       <h2>コンポーネント表示確認用ページ</h2><br><%- DOMAIN %>
       <div class="" style="text-decoration: underline;">
         <p><a href="<%- ROOT_PATH + json[`components`][`path`] %>">./components.html</a></p>
@@ -19,7 +20,7 @@
       </div>
     </div>
   </main>
-  <%- include(EJS_PATH + 'common/_footer' ) %>
+  <%- include(EJS_PATH + 'components/_footer' ) %>
 </body>
 
 </html>
