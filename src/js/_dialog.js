@@ -120,6 +120,7 @@ const openModal = (modal) => {
 
   isTransitioning = true;
   modal.showModal();
+  // modal.show();
   backfaceFixed(true);
   manageEventListeners(modal, true);
 
@@ -212,8 +213,13 @@ const backfaceFixed = (fixed) => {
   }
 };
 
-const targets = document.querySelectorAll(".modal");
+const targets = document.querySelectorAll(".js-dialog");
 
 targets?.forEach((target) => {
   initializeModal(target);
 });
+
+// // デバッグ用：1つ目のモーダルを自動的に開く
+// if (targets.length > 0) {
+//   openModal(targets[0]);
+// }

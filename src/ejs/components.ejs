@@ -1,12 +1,12 @@
 <% PAGE_DATA="components"; ROOT_PATH='./'; const EJS_PATH='./'; %>
 <!DOCTYPE html>
 <html lang="ja">
-<%- include(EJS_PATH + 'common/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
+<%- include(EJS_PATH + 'components/_head' ,{ rootPath: ROOT_PATH, page: json[PAGE_DATA] }) %>
 
 <body>
-  <%- include(EJS_PATH + 'common/_header' ) %>
+  <%- include(EJS_PATH + 'components/_header' ) %>
   <main>
-    <%- include(EJS_PATH + '/project/_mv') %>
+    <%- include(EJS_PATH + 'components/_mv') %>
     <div class="l-inner">
       <h2>pictureタグでwebP出力</h2>
       <p>
@@ -16,18 +16,18 @@
       </p>
       <br />
       <div class="dummy__image">
-        <%- include(EJS_PATH + 'component/_picture', { file: "dummy/dummy1", type: "jpg", alt: "alt", sp: true, loading: "lazy", width: 690, height: 460, spWidth: 690, spHeight: 1035 }) %>
+        <%- include(EJS_PATH + 'components/_picture', { file: "dummy/dummy1", type: "jpg", alt: "alt", sp: true, loading: "lazy", width: 690, height: 460, spWidth: 690, spHeight: 1035 }) %>
       </div>
       <br /><br /><br />
       <h2>モーダル</h2><br /><br />
-      <%- include(EJS_PATH + 'project/_p-modal') %>
+      <%- include(EJS_PATH + 'components/_p-modal') %>
       <br /><br /><br />
 
       <h2>無限ループスライダー</h2><br /><br />
-      <%- include(EJS_PATH + 'project/_p-loop-slider') %>
+      <%- include(EJS_PATH + 'components/_p-loop-slider') %>
     </div>
   </main>
-  <%- include(EJS_PATH + 'common/_footer' ) %>
+  <%- include(EJS_PATH + 'components/_footer' ) %>
 </body>
 
 </html>
