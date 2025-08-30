@@ -40,7 +40,8 @@
     "imagemin-svgo": "^7.1.0",
     "pixrem": "^5.0.0",
     "postcss-preset-env": "^8.5.1",
-    "sass": "^1.60.0"
+    "sass": "^1.60.0",
+    "scroll-hint": "^1.2.9"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
