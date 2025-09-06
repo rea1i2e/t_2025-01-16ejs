@@ -18,6 +18,14 @@
         <p><a href="<%- ROOT_PATH + json[`about`][`path`] %>">./about/</a></p>
         <p><a href="<%- DOMAIN + json[`about`][`path`] %>"><%- DOMAIN + json[`about`][`path`] %></a></p>
       </div>
+      <h2>スクロールアニメーション</h2>
+      <span data-target>スクロールアニメーション</span>
+      <span data-fadein="200">スクロールアニメーション</span>
+      <span data-fadein="400">スクロールアニメーション</span>
+      <h3>カウントアップ</h3>
+      <div data-counter="50">0</div>
+      <div data-counter="2000">0</div>
+      <div data-counter="3000">0</div>
     </div>
     <%- include(EJS_PATH + 'components/_loop-slider'); %>
   </main>
