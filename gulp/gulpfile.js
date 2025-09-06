@@ -33,27 +33,26 @@ const webpack = require("webpack");
 const webpackStream = require("webpack-stream");
 const named = require("vinyl-named");
 
-// Define paths
-const paths = {
-  src: {
-    json: "../src/ejs/**/*.json",
-    css: "../src/sass/**/*.scss",
-    js: "../src/js/**/*",
-    img: "../src/images/**/*",
-    ejs: "../src/ejs/**/*.ejs",
-    html: ["../src/**/*.html", "!../src/node_modules/**"],
-    rt: "../src/root/**/*",
-  },
-  dest: {
-    all: "../dist/**/*",
-    css: "../dist/assets/css/",
-    js: "../dist/assets/js/",
-    img: "../dist/assets/images/",
-    html: "../dist/",
-  }
+// 読み込み先
+const srcPath = {
+  json: "../src/ejs/**/*.json",
+  css: "../src/sass/**/*.scss",
+  js: "../src/js/**/*",
+  img: "../src/images/**/*",
+  ejs: "../src/ejs/**/*.ejs",
+  html: ["../src/**/*.html", "!../src/node_modules/**"],
+  rt: "../src/root/**/*",
 };
 
-// Define browser support
+// html反映用
+const destPath = {
+  all: "../dist/**/*",
+  css: "../dist/assets/css/",
+  js: "../dist/assets/js/",
+  img: "../dist/assets/images/",
+  html: "../dist/",
+};
+
 const browsers = [
   "last 2 versions",
   "> 1%",
@@ -61,102 +60,215 @@ const browsers = [
   "not ie 11",
 ];
 
-// Compile Sass
-const compileSass = () => {
-  return src(paths.src.css)
-    .pipe(sourcemaps.init())
-    .pipe(plumber({ errorHandler: notify.onError("Error:<%= error.message %>") }))
-    .pipe(sassGlob())
-    .pipe(sass.sync({ includePaths: ["src/sass"], outputStyle: "expanded" }))
-    .pipe(postcss([autoprefixer({ overrideBrowserslist: browsers })]))
-    .pipe(sourcemaps.write("./"))
-    .pipe(dest(paths.dest.css))
-    .pipe(notify({ message: "Sassをコンパイルしました！", onLast: true }));
+const cssSass = () => {
+  // ソースファイルを指定
+  return (
+    src(srcPath.css)
+      // ソースマップを初期化
+      .pipe(sourcemaps.init())
+      // エラーハンドリングを設定
+      .pipe(
+        plumber({
+          errorHandler: notify.onError("Error:<%= error.message %>"),
+        })
+      )
+      // Sassのパーシャル（_ファイル）を自動的にインポート
+      .pipe(sassGlob())
+      // SassをCSSにコンパイル
+      .pipe(
+        sass.sync({
+          includePaths: ["src/sass"],
+          outputStyle: "expanded", // コンパイル後のCSSの書式（expanded or compressed）
+        })
+      )
+
+      // PostCSS処理（ベンダープレフィックス自動付与）
+      .pipe(
+        postcss([
+          autoprefixer({ overrideBrowserslist: browsers })
+        ])
+      )
+
+      // ソースマップを書き出し
+      .pipe(sourcemaps.write("./"))
+      // コンパイル済みのCSSファイルを出力先に保存
+      .pipe(dest(destPath.css))
+      // Sassコンパイルが完了したことを通知
+      .pipe(
+        notify({
+          message: "Sassをコンパイルしました！",
+          onLast: true,
+        })
+      )
+  );
 };
 
-// Compile EJS
-const compileEjs = (done) => {
-  const jsonFile = "../src/ejs/pageData/pageData.json";
-  const json = JSON.parse(fs.readFileSync(jsonFile, "utf8"));
+//ejsのコンパイル
+const ejsCompile = (done) => {
+  var jsonFile = "../src/ejs/pageData/pageData.json",
+    json = JSON.parse(fs.readFileSync(jsonFile, "utf8"));
 
-  src([paths.src.ejs, "!../src/ejs/**/_*.ejs"])
-    .pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+  // EJSファイルを指定（パーシャルファイル（_ファイル）を除く）
+  // src([srcEjsDir + "/**/*.ejs", "!" + srcEjsDir + "/**/_*.ejs"])
+  src([srcEjsDir + "/**/!(_)*.ejs"])
+    // エラーハンドリングを設定
+    .pipe(
+      plumber({
+        errorHandler: notify.onError(function (error) {
+          return {
+            message: "Error: <%= error.message %>",
+            sound: false,
+          };
+        }),
+      })
+    )
     .pipe(ejs({ json: json }))
+    // EJSファイルをHTMLにコンパイル
+    .pipe(ejs({}))
+    // 拡張子を.htmlに変更
     .pipe(rename({ extname: ".html" }))
+    // 空白行を削除（GTMスクリプト以外）
     .pipe(replace(/^(?!.*GTM-PW9R494W)[ \t]*\n/gm, ""))
-    .pipe(htmlbeautify({
-      indent_size: 2,
-      indent_char: " ",
-      max_preserve_newlines: 0,
-      preserve_newlines: false,
-      extra_liners: [],
-      unformatted: ['script']
-    }))
-    .pipe(dest(paths.dest.html));
+    // HTMLファイルを整形
+    .pipe(
+      htmlbeautify({
+        indent_size: 2, // インデントサイズ
+        indent_char: " ", // インデントに使用する文字
+        max_preserve_newlines: 0, // 連続改行の最大数
+        preserve_newlines: false, // 改行を維持するかどうか
+        extra_liners: [], // 追加の改行を挿入する要素
+        unformatted: ['script'] // scriptタグの内容は整形しない
+      })
+    )
+    // コンパイル済みのHTMLファイルを出力先に保存
+    .pipe(dest(destPath.html));
+  // 完了を通知
   done();
 };
 
-// Optimize Images
-const optimizeImages = () => {
-  return src(paths.src.img)
-    .pipe(changed(paths.dest.img))
-    .pipe(imagemin([
-      imageminMozjpeg({ quality: 80 }),
-      imageminPngquant(),
-      imageminSvgo({ plugins: [{ removeViewbox: false }] })
-    ], { verbose: true }))
-    .pipe(dest(paths.dest.img))
-    .pipe(webp())
-    .pipe(dest(paths.dest.img));
+// 画像圧縮
+const imgImagemin = () => {
+  // 画像ファイルを指定
+  return (
+    src(srcPath.img)
+      // 変更があった画像のみ処理対象に
+      .pipe(changed(destPath.img))
+      // 画像を圧縮
+      .pipe(
+        imagemin(
+          [
+            // JPEG画像の圧縮設定
+            imageminMozjpeg({
+              quality: 80, // 圧縮品質（0〜100）
+            }),
+            // PNG画像の圧縮設定
+            imageminPngquant(),
+            // SVG画像の圧縮設定
+            imageminSvgo({
+              plugins: [
+                {
+                  removeViewbox: false, // viewBox属性を削除しない
+                },
+              ],
+            }),
+          ],
+          {
+            verbose: true, // 圧縮情報を表示
+          }
+        )
+      )
+      // 圧縮済みの画像ファイルを出力先に保存
+      .pipe(dest(destPath.img))
+      // .pipe(dest(destWpPath.img))
+      .pipe(webp()) //webpに変換
+      // 圧縮済みの画像ファイルを出力先に保存
+      .pipe(dest(destPath.img))
+    // .pipe(dest(destWpPath.img))
+  );
 };
 
-// Bundle JavaScript
-const bundleJs = () => {
-  return src(paths.src.js)
-    .pipe(plumber({ errorHandler: notify.onError("Error: <%= error.message %>") }))
+// jsバンドル
+const jsWebpack = () => {
+  return src(srcPath.js)
+    .pipe(plumber({
+      errorHandler: notify.onError("Error: <%= error.message %>"),
+    }))
     .pipe(named())
     .pipe(webpackStream({
       mode: "development",
       devtool: "source-map",
-      entry: { index: "../src/js/index.js" },
-      output: { filename: "bundle.js" },
+      entry: {
+        index: "../src/js/index.js"
+      },
+      output: {
+        filename: "bundle.js"
+      },
       module: {
         rules: [
-          { test: /\.js$/, exclude: /node_modules/, use: { loader: "babel-loader", options: { presets: ["@babel/preset-env"] } } },
-          { test: /\.css$/, use: ["style-loader", "css-loader"] }
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"]
+              }
+            }
+          },
+          // CSSローダーの設定を追加
+          {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
+          }
         ]
       },
-      resolve: { extensions: [".js"], modules: ["node_modules", path.resolve(__dirname, "node_modules")] }
+      resolve: {
+        extensions: [".js"],
+        modules: ["node_modules", path.resolve(__dirname, "node_modules")]
+      }
     }))
-    .pipe(dest(paths.dest.js));
+    .pipe(dest(destPath.js));
 };
 
-// Copy root files
 const copyRootFiles = () => {
-  return src(paths.src.rt).pipe(dest(paths.dest.html)); // destPath.htmlは'dist/'を指しています。
+  return src(srcPath.rt).pipe(dest(destPath.html)); // destPath.htmlは'dist/'を指しています。
 };
 
-// BrowserSync
-const browserSyncOption = { notify: false, server: "../dist/" };
-const browserSyncFunc = () => browserSync.init(browserSyncOption);
-const browserSyncReload = (done) => { browserSync.reload(); done(); };
+// ブラウザーシンク
+const browserSyncOption = {
+  notify: false,
+  server: "../dist/", // ローカルサーバーのルートディレクトリ
+};
+const browserSyncFunc = () => {
+  browserSync.init(browserSyncOption);
+};
+const browserSyncReload = (done) => {
+  browserSync.reload();
+  done();
+};
 
-// Clean output directory
-const clean = () => del([paths.dest.all], { force: true });
+// ファイルの削除
+const clean = () => {
+  return del([destPath.all], { force: true });
+};
 
-// Watch files
+// ファイルの監視
 const watchFiles = () => {
-  watch(paths.src.css, series(compileSass, browserSyncReload));
-  watch(paths.src.js, series(bundleJs, browserSyncReload));
-  watch(paths.src.img, series(optimizeImages, browserSyncReload));
-  watch(paths.src.ejs, series(compileEjs, browserSyncReload));
-  watch(paths.src.rt, series(copyRootFiles, browserSyncReload));
+  watch(srcPath.css, series(cssSass, browserSyncReload));
+  watch(srcPath.js, series(jsWebpack, browserSyncReload));
+  watch(srcPath.img, series(imgImagemin, browserSyncReload));
+  watch(srcPath.ejs, series(ejsCompile, browserSyncReload));
+  watch(srcPath.rt, series(copyRootFiles, browserSyncReload));
 };
 
-// Export tasks
+// ブラウザシンク付きの開発用タスク
 exports.default = series(
-  series(compileSass, bundleJs, optimizeImages, compileEjs, copyRootFiles),
+  series(cssSass, jsWebpack, imgImagemin, ejsCompile, copyRootFiles),
   parallel(watchFiles, browserSyncFunc)
 );
-exports.build = series(clean, compileSass, bundleJs, optimizeImages, compileEjs, copyRootFiles);
-exports.jsWebpack = bundleJs;
+
+// 本番用タスク
+exports.build = series(clean, cssSass, jsWebpack, imgImagemin, ejsCompile, copyRootFiles);
+
+// タスクをエクスポート
+exports.jsWebpack = jsWebpack;
