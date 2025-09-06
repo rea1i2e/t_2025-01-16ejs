@@ -1,0 +1,164 @@
+name: FTP Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record build start time
+        id: start_time
+        run: echo "start_time=$(date +%s)" >> $GITHUB_OUTPUT
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+        working-directory: gulp
+
+      - name: Build project
+        run: npm run build
+        working-directory: gulp
+        env:
+          CI: true
+
+      - name: Verify build output
+        run: |
+          ls -la dist/
+          if [ ! -d "dist" ]; then
+            echo "Build failed: dist directory not found"
+            exit 1
+          fi
+
+      - name: Install validation tools
+        run: |
+          npm install -g vnu-jar stylelint stylelint-config-standard jq
+          sudo apt-get update && sudo apt-get install -y default-jre curl
+
+      - name: HTML Validation (W3C Nu Validator)
+        id: html_validation
+        run: |
+          echo "Running W3C HTML validation..."
+          echo "Checking HTML files..."
+          ls -la dist/*.html || echo "No HTML files found"
+          echo "Running W3C Nu validator with filtering..."
+          
+          # Create filter file for specific errors to ignore
+          cat > /tmp/html-filter.txt << 'EOF'
+          Trailing slash on void elements has no effect.*
+          Consider adding a "lang" attribute.*
+          spheight.*not allowed.*
+          EOF
+          
+          if html_validate_output=$(java -jar $(npm root -g)/vnu-jar/build/dist/vnu.jar --format text --errors-only --filterfile /tmp/html-filter.txt dist/*.html 2>&1); then
+            echo "Validation output: $html_validate_output"
+            echo "html_result=✅ HTML validation passed (W3C - critical errors only)" >> $GITHUB_OUTPUT
+            echo "html_status=success" >> $GITHUB_OUTPUT
+            echo "html_details=" >> $GITHUB_OUTPUT
+          else
+            echo "Critical validation errors found: $html_validate_output"
+            echo "html_result=❌ HTML validation failed (W3C - critical errors)" >> $GITHUB_OUTPUT
+            echo "html_status=failed" >> $GITHUB_OUTPUT
+            # エラー詳細を短縮して保存（最大2行、120文字以内）
+            html_errors=$(echo "$html_validate_output" | head -2 | cut -c1-120 | sed 's/$/\\n/' | tr -d '\n' | sed 's/\\n$//')
+            echo "html_details=$html_errors" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/Thumbs.db
+          log-level: verbose
+
+      - name: Calculate build time
+        id: build_time
+        run: |
+          end_time=$(date +%s)
+          build_duration=$((end_time - ${{ steps.start_time.outputs.start_time }}))
+          minutes=$((build_duration / 60))
+          seconds=$((build_duration % 60))
+          if [ $minutes -gt 0 ]; then
+            echo "duration=${minutes}分${seconds}秒" >> $GITHUB_OUTPUT
+          else
+            echo "duration=${seconds}秒" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Discord Notification - Success
+        if: success()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            🚀 **デプロイ成功！**
+            
+            **テスト環境**: ${{ secrets.TEST_URL }}
+            **リポジトリ**: https://github.com/${{ github.repository }}
+            **ブランチ**: ${{ github.ref_name }}
+            **コミット**: ${{ github.sha }}
+            **コミットメッセージ**: ${{ github.event.head_commit.message }}
+            **作業者**: ${{ github.actor }}
+            **ビルド時間**: ${{ steps.build_time.outputs.duration }}
+            **時刻**: ${{ github.event.head_commit.timestamp }}
+            
+            **🔍 バリデーション結果:**
+            ${{ steps.html_validation.outputs.html_result }}
+            ${{ steps.css_validation.outputs.css_result }}
+            
+            ${{ steps.html_validation.outputs.html_details && format('```
+            {0}
+            ```', steps.html_validation.outputs.html_details) || '' }}
+            ${{ steps.css_validation.outputs.css_details && format('```
+            {0}
+            ```', steps.css_validation.outputs.css_details) || '' }}
+            
+            ${{ (steps.html_validation.outputs.html_status == 'failed' || steps.css_validation.outputs.css_status == 'failed' || steps.css_validation.outputs.css_status == 'unclear' || steps.css_validation.outputs.css_status == 'error') && format('詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
+            
+            ✅ サイトが正常にアップデートされました！
+
+      - name: Discord Notification - Failure
+        if: failure()
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: |
+            ❌ **デプロイ失敗**
+            
+            **リポジトリ**: https://github.com/${{ github.repository }}
+            **ブランチ**: ${{ github.ref_name }}
+            **コミット**: ${{ github.sha }}
+            **コミットメッセージ**: ${{ github.event.head_commit.message }}
+            **作業者**: ${{ github.actor }}
+            **時刻**: ${{ github.event.head_commit.timestamp }}
+            
+            🔍 GitHub Actionsのログを確認してください。
+            🔗 https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
