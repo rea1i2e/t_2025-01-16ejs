@@ -1,6 +1,6 @@
 <% const EJS_PATH='../'; const IMG_PATH = "assets/images/"; %>
 <picture>
-  <% if (sp) { %>
+  <% if (typeof spWidth !== 'undefined') { %>
   <source srcset="<%= ROOT_PATH + IMG_PATH + file %>_sp.webp" media="(max-width: 767px)" type="image/webp" <% if (typeof spWidth !== 'undefined') { %>width="<%= spWidth %>"  <% } %>  <% if (typeof spHeight !== 'undefined') { %>height="<%= spHeight %>"  <% } %> >
   <source srcset="<%= ROOT_PATH + IMG_PATH + file + '_sp.' + type %>" media="(max-width: 767px)" type="image/<%= type %>" <% if (typeof spWidth !== 'undefined') { %>width="<%= spWidth %>"  <% } %>  <% if (typeof spHeight !== 'undefined') { %>height="<%= spHeight %>"  <% } %> >
   <% } %>

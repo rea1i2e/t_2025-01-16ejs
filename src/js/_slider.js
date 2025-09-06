@@ -1,6 +1,6 @@
 import '@splidejs/splide/dist/css/splide-core.min.css';
 import { Splide } from '@splidejs/splide';
-// import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 
 /**
  * トップページ メインビジュアル
@@ -22,46 +22,26 @@ if (topMvSplide) {
   }).mount();
 }
 
-// /**
-//  * トップページ トピックス
-//  * 上から下にスライド（1行の投稿切り替え）
-//  */
-// const topTopicsSplide = document.getElementById("js-top-topics-splide");
-// if (topTopicsSplide) {
-//   new Splide(topTopicsSplide, {
-//     direction: "ttb",
-//     height: "1lh",
-//     type: "loop",
-//     autoplay: true,
-//     perPage: 1,
-//     perMove: 1,
-//     gap: 0,
-//     pagination: false,
-//     arrows: false,
-//     breakpoints: {
-//       768: {
-//         height: "2lh",
-//       },
-//     },
-//   }).mount();
-// }
+/**
+ * 無限ループスライダー
+ * @codex https://splidejs.com/extensions/auto-scroll/
+ */
+const loopSplideOptions = {
+  arrows: false, // 矢印ボタンを非表示
+  pagination: false, // ページネーションを非表示
+  type: "loop", // ループさせる
+  autoWidth: true, // cssで幅指定
+  // gap: "calc(24 / 16 * 1rem)", // スライド間の余白
+  drag: "free", // フリードラッグモード
+  drag: true, // スマホで動作が不安定なので、実機確認必須
+  autoScroll: {
+    speed: 0.5, // スクロール速度
+    pauseOnHover: false, // カーソルが乗ってもスクロールを停止させない
+  },
+};
 
-// /**
-//  * 無限ループスライダー
-//  * @codex https://splidejs.com/extensions/auto-scroll/
-//  */
-// const loopSplideOptions = {
-//   arrows: false, // 矢印ボタンを非表示
-//   pagination: false, // ページネーションを非表示
-//   type: "loop", // ループさせる
-//   autoWidth: true, // cssで幅指定
-//   gap: "calc(24 / 16 * 1rem)", // スライド間の余白
-//   drag: "free", // フリードラッグモード
-//   drag: true, // スマホで動作が不安定なので、実機確認必須
-//   autoScroll: {
-//     speed: 0.5, // スクロール速度
-//     pauseOnHover: false, // カーソルが乗ってもスクロールを停止させない
-//   },
-// };
-// const loopSplide = new Splide("#js-top-loop-slider", loopSplideOptions);
-// loopSplide.mount({ AutoScroll });
+const loopSliderElement = document.querySelector("#js-loop-slider");
+if (loopSliderElement) {
+  const loopSplide = new Splide(loopSliderElement, loopSplideOptions);
+  loopSplide.mount({ AutoScroll });
+}

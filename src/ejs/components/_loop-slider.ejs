@@ -1,0 +1,21 @@
+<% const EJS_PATH = "../"; %>
+<%
+const images = [
+  { file: 'dummy/dummy1', type: 'jpg', alt: '', width: 690, height: 460 },
+  { file: 'dummy/dummy2', type: 'jpg', alt: '', width: 690, height: 460 },
+  { file: 'dummy/dummy3', type: 'jpg', alt: '', width: 690, height: 460 },
+];
+%>
+<div class="p-loop-slider l-loop-slider">
+  <div class="p-loop-slider__slider splide" id="js-loop-slider">
+    <div class="p-loop-slider__slider-track splide__track">
+      <ul class="p-loop-slider__slider-list splide__list">
+        <% images.forEach(function(args) { %>
+        <li class="p-loop-slider__slider-item splide__slide">
+          <%- include(EJS_PATH + 'components/_picture', args) %>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+</div>

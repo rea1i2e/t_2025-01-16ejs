@@ -1,37 +1,27 @@
-@use 'global' as *;
+@use "global" as *;
 
-@keyframes loop-slide {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
+.p-loop-slider {
 }
 
-.p-loop-slider__wrap {
-  display: flex;
-  overflow: hidden;
+.p-loop-slider__slider {
 }
 
-.p-loop-slider__list {
-  display: flex;
-  animation :loop-slide 20s infinite linear 0.5s both;
+.p-loop-slider__slider-track {
+}
+
+
+.p-loop-slider__slider-list {
+}
+
+
+.p-loop-slider__slider-item {
+  width: rem(190);
   @include mq() {
-    animation-duration: 30s;
+    width: rem(498);
   }
 }
 
-// 画像のサイズ指定はここで。
-.p-loop-slider__item {
-  width: 64vw; // 100vwとするとiPhoneでチラつく。必要な場合は、70vw程度にした上でscaleでサイズ調整する
-  @include mq() {
-    width: 40vw
-  }
-}
-.p-loop-slider__item img{
-   width: 100%;
-   height: auto;
-   aspect-ratio: 3 / 2;
-   object-fit: cover;
+.p-loop-slider__slider-item img {
+  aspect-ratio: 966/1140;
+  object-fit: cover;
 }

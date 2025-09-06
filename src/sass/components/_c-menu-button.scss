@@ -3,8 +3,6 @@
 .c-menu-button {
   position: relative;
   width: rem(39);
-  height: auto;
-  aspect-ratio: 1/ 1;
   background-color: #fff; // test
 }
 
@@ -17,7 +15,7 @@
   width: rem(40);
   height: 2px;
   background-color: var(--color-black);
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .c-menu-button span:before,
@@ -29,8 +27,9 @@
   background-color: var(--color-black);
   border-radius: 100vw;
   content: "";
-  transition: all 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
+
 .c-menu-button span::before {
   transform: translateY(rem(-8));
 }
