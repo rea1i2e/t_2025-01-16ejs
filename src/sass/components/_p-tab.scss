@@ -1,0 +1,39 @@
+@use 'global' as *;
+
+.p-tab__menu-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(5);
+  @include mq() {
+    gap: rem(20);
+  }
+}
+
+.p-tab__button {
+}
+
+.p-tab__contents {
+  margin-top: rem(42);
+  @include mq() {
+    margin-top: rem(107);
+  }
+}
+
+.p-tab__content {
+  display: none;
+}
+
+.p-tab__content.is-active {
+  display: block;
+  animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
