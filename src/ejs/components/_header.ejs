@@ -4,7 +4,7 @@ let tag = (PAGE_DATA === 'top') ? 'h1' : 'div';
 include(EJS_PATH + 'components/_nav-items') ;
 %>
 <header class="p-header l-header">
-  <div class="p-header__inner l-inner">
+  <div class="p-header__inner">
     <<%= tag %> class="p-header__logo">
       <a href="<%= ROOT_PATH %>" class="p-header__logo-link">
         <img src="<%= ROOT_PATH %>assets/images/common/logo.svg" alt="">
@@ -17,7 +17,7 @@ include(EJS_PATH + 'components/_nav-items') ;
       <ul class="p-header__pc-nav-items">
         <% nav_items.forEach(function(item) { %>
         <li class="p-header__pc-nav-item">
-          <a href="<%- item.href %>"<%- typeof blank !== 'undefined' ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
+          <a class="p-header__pc-nav-item-link" href="<%- item.href %>"<%- typeof blank !== 'undefined' ? ' target="_blank" rel="noopener noreferrer"' : '' %>>
             <%- item.text %>
           </a>
         </li>
@@ -31,7 +31,7 @@ include(EJS_PATH + 'components/_nav-items') ;
       <ul class="p-drawer__nav-items" id="js-drawer-menu">
         <% nav_items.forEach(function(item) { %>
         <li class="p-drawer__nav-item">
-          <a href="<%- item.href %>">
+          <a class="p-drawer__nav-item-link" href="<%- item.href %>">
             <%- item.text %>
           </a>
         </li>

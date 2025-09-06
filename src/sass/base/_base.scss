@@ -1,70 +1,46 @@
 /* リキッドレイアウト対応 */
 @use "global" as *;
 
-@if $startFrom == sp {
-  //スマホファースト
-  html {
-    //375px~767px
-    font-size: 16px;
+html {
+  font-size: 16px;
 
-    //~375px
-    @media (max-width: 375px) {
-      font-size: vw(375, 16);
-    }
-
-    @include mq(sm) {
-      font-size: 16px;
-    }
-
-    @include mq(md) {
-      font-size: vw($inner-pc + $padding-pc * 2, 16);
-    }
-
-    @include mq(lg) {
-      font-size: 16px;
-    }
-
-    //inner~max-screen
-    @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
-      font-size: 16px;
-    }
-
-
-    @include mq(xl) {
-      font-size: 16px;
-    }
+  @media (max-width: 375px) {
+    font-size: vw(375, 16);
   }
-} @else {
-  //PCファースト
-  html {
+
+  @include mq() {
+    font-size: vw($inner-pc + $padding-pc * 2, 16);
+  }
+
+  @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
     font-size: 16px;
+  }
 
-    @include mq(xl) {
-      font-size: 16px;
-    }
-
-    @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
-      font-size: vw($inner-pc + $padding-pc * 2, 16);
-    }
-
-    @include mq(lg) {
-      font-size: 16px;
-    }
-
-    @include mq(md) {
-      font-size: 16px;
-    }
-
-    @include mq(sm) {
-      font-size: 16px;
-    }
-
-    //~375px
-    @media (max-width: 375px) {
-      font-size: vw(375, 16);
-    }
+  @include mq(xl) {
+    font-size: 16px;
   }
 }
+
+//PCファースト
+// html {
+//   font-size: 16px;
+
+//   @include mq(xl) {
+//     font-size: 16px;
+//   }
+
+//   @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
+//     font-size: vw($inner-pc + $padding-pc * 2, 16);
+//   }
+
+//   @include mq() {
+//     font-size: 16px;
+//   }
+
+//   @media (max-width: 375px) {
+//     font-size: vw(375, 16);
+//   }
+// }
 
 :root {
   --base-font-family: "";
@@ -129,4 +105,3 @@ body {
 main {
   flex: 1;
 }
-

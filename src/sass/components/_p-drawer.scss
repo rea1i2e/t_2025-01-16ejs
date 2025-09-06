@@ -1,8 +1,20 @@
 @use "global" as *;
 
 .p-drawer {
-  background-color: beige; // test
-  padding: rem(100) 0 rem(80);
+  background-color: #ccc;
+  padding-block: rem(80);
+  overflow: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.p-drawer[aria-hidden="false"] {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.p-drawer__inner {
 }
 
 // .p-drawer__inner {
@@ -15,7 +27,7 @@
 // .p-drawer__nav-item {
 // }
 
-.p-drawer__nav-item a {
+.p-drawer__nav-item-link {
   display: flex;
   gap: rem(10);
   padding: rem(10);

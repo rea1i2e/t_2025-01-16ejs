@@ -3,7 +3,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no" />
-  <!-- meta情報 -->
   <title><%- page['title'] %></title>
   <meta name="description" content="<%- page['description'] %>" />
   <meta property="og:site_name" content="<%- page['title'] %>" />
@@ -18,14 +17,10 @@
   <meta name="twitter:title" content="<%- page['title'] %>">
   <meta name="twitter:description" content="<%- page['description'] %>">
   <meta name="twitter:image:src" content="<%- DOMAIN %>ogp.png">
-  <!-- その他画像関連 -->
   <link rel="shortcut icon" href="./favicon.ico" type="image/vnd.microsoft.icon">
   <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-  <!-- canonicalタグ -->
   <link rel="canonical" href="<%- DOMAIN + page['path'] %>">
-  <!-- css -->
   <link rel="stylesheet" href="<%- ROOT_PATH %>assets/css/style.css?ver=<%- new Date().getTime() %>" />
-  <!-- JavaScript -->
   <script defer src="<%- ROOT_PATH %>assets/js/bundle.js?var=<%- new Date().getTime() %>"></script>
-  
+  <link rel="preload" href="<%- ROOT_PATH %>fonts/NotoSansJP-VF.woff2" as="font" type="font/woff2" crossorigin>
 </head>
