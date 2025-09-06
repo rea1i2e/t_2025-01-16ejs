@@ -131,14 +131,10 @@ jobs:
             
             **🔍 バリデーション結果:**
             ${{ steps.html_validation.outputs.html_result }}
-            ${{ steps.css_validation.outputs.css_result }}
             
             ${{ steps.html_validation.outputs.html_details && format('```
             {0}
             ```', steps.html_validation.outputs.html_details) || '' }}
-            ${{ steps.css_validation.outputs.css_details && format('```
-            {0}
-            ```', steps.css_validation.outputs.css_details) || '' }}
             
             ${{ (steps.html_validation.outputs.html_status == 'failed' || steps.css_validation.outputs.css_status == 'failed' || steps.css_validation.outputs.css_status == 'unclear' || steps.css_validation.outputs.css_status == 'error') && format('詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
             
