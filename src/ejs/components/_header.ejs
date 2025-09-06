@@ -3,7 +3,7 @@ const EJS_PATH = "../";
 let tag = (PAGE_DATA === 'top') ? 'h1' : 'div';
 include(EJS_PATH + 'components/_nav-items') ;
 %>
-<header class="p-header l-header">
+<header class="p-header l-header" id="js-header">
   <div class="p-header__inner">
     <<%= tag %> class="p-header__logo">
       <a href="<%= ROOT_PATH %>" class="p-header__logo-link">
