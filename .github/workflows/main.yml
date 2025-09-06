@@ -57,7 +57,7 @@ jobs:
         run: |
           echo "Running W3C HTML validation..."
           echo "Checking HTML files..."
-          ls -la dist/*.html || echo "No HTML files found"
+          ls -la dist/**/*.html || echo "No HTML files found"
           echo "Running W3C Nu validator with filtering..."
           
           # Create filter file for specific errors to ignore
