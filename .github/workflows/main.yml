@@ -67,7 +67,7 @@ jobs:
           spheight.*not allowed.*
           EOF
           
-          if html_validate_output=$(java -jar $(npm root -g)/vnu-jar/build/dist/vnu.jar --format text --errors-only --filterfile /tmp/html-filter.txt dist/*.html 2>&1); then
+          if html_validate_output=$(java -jar $(npm root -g)/vnu-jar/build/dist/vnu.jar --format text --errors-only --filterfile /tmp/html-filter.txt dist/**/*.html 2>&1); then
             echo "Validation output: $html_validate_output"
             echo "html_result=✅ HTML validation passed (W3C - critical errors only)" >> $GITHUB_OUTPUT
             echo "html_status=success" >> $GITHUB_OUTPUT
