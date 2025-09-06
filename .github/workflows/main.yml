@@ -79,6 +79,9 @@ jobs:
             # エラー詳細を短縮して保存（最大2行、120文字以内）
             html_errors=$(echo "$html_validate_output" | head -2 | cut -c1-120 | sed 's/$/\\n/' | tr -d '\n' | sed 's/\\n$//')
             echo "html_details=$html_errors" >> $GITHUB_OUTPUT
+            # エラーの数を計算して出力
+            error_count=$(echo "$html_validate_output" | wc -l)
+            echo "html_error_count=$error_count" >> $GITHUB_OUTPUT
           fi
         continue-on-error: true
 
@@ -127,13 +130,10 @@ jobs:
             **コミットメッセージ**: ${{ github.event.head_commit.message }}
             **作業者**: ${{ github.actor }}
             **ビルド時間**: ${{ steps.build_time.outputs.duration }}
-            **時刻**: ${{ github.event.head_commit.timestamp }}
             
             **🔍 バリデーション結果:**
             ${{ steps.html_validation.outputs.html_result }}
-            
-            # バリデーションエラーの数を出力
-            echo "HTML validation errors: $(echo "$html_validate_output" | wc -l)" >> $GITHUB_OUTPUT
+            **エラーの数**: ${{ steps.html_validation.outputs.html_error_count }}
             
             ${{ steps.html_validation.outputs.html_details && format('```
             {0}
