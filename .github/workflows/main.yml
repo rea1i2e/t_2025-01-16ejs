@@ -132,11 +132,14 @@ jobs:
             **🔍 バリデーション結果:**
             ${{ steps.html_validation.outputs.html_result }}
             
+            # バリデーションエラーの数を出力
+            echo "HTML validation errors: $(echo "$html_validate_output" | wc -l)" >> $GITHUB_OUTPUT
+            
             ${{ steps.html_validation.outputs.html_details && format('```
             {0}
             ```', steps.html_validation.outputs.html_details) || '' }}
             
-            ${{ (steps.html_validation.outputs.html_status == 'failed' || steps.css_validation.outputs.css_status == 'failed' || steps.css_validation.outputs.css_status == 'unclear' || steps.css_validation.outputs.css_status == 'error') && format('詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
+            ${{ (steps.html_validation.outputs.html_status == 'failed') && format('詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
             
             ✅ サイトが正常にアップデートされました！
 
