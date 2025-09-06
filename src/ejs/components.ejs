@@ -5,27 +5,37 @@
 
 <body>
   <%- include(EJS_PATH + 'components/_header' ) %>
+  <%- include(EJS_PATH + 'components/_sub-mv', {
+    image: {
+      file: "dummy/dummy3",
+      type: "jpg",
+      alt: "",
+      width: 2559,
+      height: 1102
+    },
+    title_tag: "h1",
+    title: "ページタイトル",
+  } ) %>
   <main>
-    <%- include(EJS_PATH + 'components/_mv') %>
     <div class="l-inner">
-      <h2>pictureタグでwebP出力</h2>
-      <p>
-        sp画像がないときには、falseとする<br />
-        loading=”lazy”が不要なときには、loading: "eager"とする<br />
-        sp用の画像比率がpc用と同一の場合、spWidth, spHeightは定義しない
-      </p>
-      <br />
-      <div class="dummy__image">
-        <%- include(EJS_PATH + 'components/_picture', { file: "dummy/dummy1", type: "jpg", alt: "alt", sp: true, loading: "lazy", width: 690, height: 460, spWidth: 690, spHeight: 1035 }) %>
-      </div>
-      <br /><br /><br />
-      <h2>モーダル</h2><br /><br />
-      <%- include(EJS_PATH + 'components/_p-modal') %>
-      <br /><br /><br />
+      <h2>モーダル</h2>
+      <%- include(EJS_PATH + 'components/_p-dialog') %>
+      <hr>
 
-      <h2>無限ループスライダー</h2><br /><br />
-      <%- include(EJS_PATH + 'components/_p-loop-slider') %>
+      <h2>カウントアップ</h2>
+      <%- include(EJS_PATH + 'components/_countup') %>
+      <hr>
+
+      <h2>タブ</h2>
+      <%- include(EJS_PATH + 'components/_tab') %>
+      <hr>
+
+      <%  %>
+      <%-  %>
+      <%=  %>
     </div>
+    <h2>無限ループスライダー</h2>
+    <%- include(EJS_PATH + 'components/_loop-slider') %>
   </main>
   <%- include(EJS_PATH + 'components/_footer' ) %>
 </body>

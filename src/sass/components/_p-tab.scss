@@ -2,8 +2,6 @@
 
 .p-tab__menu-items {
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: rem(5);
   @include mq() {
     gap: rem(20);
@@ -13,11 +11,12 @@
 .p-tab__button {
 }
 
+.p-tab__button.is-active {
+  background-color: pink;
+}
+
 .p-tab__contents {
-  margin-top: rem(42);
-  @include mq() {
-    margin-top: rem(107);
-  }
+  margin-top: rem(16);
 }
 
 .p-tab__content {

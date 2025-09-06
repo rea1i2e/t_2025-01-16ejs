@@ -27,18 +27,18 @@
 ]; %>
 <div class="">
   <% dialogs.forEach((dialog, index) => { %>
-    <button class="p-dialog-trigger" type="button" data-modal-open="modal<%= index + 1 %>">
-      <%= dialog.trigger %>
+    <button class="p-dialog-trigger" type="button" data-modal-open="modal<%- index + 1 %>">
+      <%- dialog.trigger %>
     </button>
-    <dialog id="modal<%= index + 1 %>" class="p-dialog js-dialog" <%= index === 0 ? 'autofocus' : '' %>>
+    <dialog id="modal<%- index + 1 %>" class="p-dialog js-dialog" <%- index === 0 ? 'autofocus' : '' %>>
       <div class="p-dialog__container">
-        <h1 class="p-dialog__title"><%= dialog.title %></h1>
+        <h1 class="p-dialog__title"><%- dialog.title %></h1>
         <% dialog.descriptions.forEach(description => { %>
-          <p class="p-dialog__description"><%= description %></p>
+          <p class="p-dialog__description"><%- description %></p>
         <% }); %>
       </div>
-      <button class="close" type="button" aria-labelledby="close<%= index + 1 %>" data-modal-close>
-        <span id="close<%= index + 1 %>" style="display:none">モーダルを閉じる</span>
+      <button class="close" type="button" aria-labelledby="close<%- index + 1 %>" data-modal-close>
+        <span id="close<%- index + 1 %>" style="display:none">モーダルを閉じる</span>
       </button>
     </dialog>
   <% }); %>

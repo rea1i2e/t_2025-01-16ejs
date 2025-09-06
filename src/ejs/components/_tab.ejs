@@ -1,0 +1,24 @@
+<% const EJS_PATH = "../";
+const tabs = [
+  { id: "tab-01", label: "タブ01", content: "_tab-content01", isActive: true },
+  { id: "tab-02", label: "タブ02", content: "_tab-content02", isActive: false },
+  { id: "tab-03", label: "タブ03", content: "_tab-content03", isActive: false }
+]; %>
+<div class="p-jobs__content">
+  <div class="p-tab js-tab">
+    <ul class="p-tab__menu-items">
+      <% tabs.forEach(tab => { %>
+      <li class="p-tab__menu-item">
+        <button type="button" class="p-tab__button c-tab-button js-tab-trigger <%= tab.isActive ? 'is-active' : '' %>" data-id="<%= tab.id %>"><%= tab.label %></button>
+      </li>
+      <% }); %>
+    </ul>
+    <div class="p-tab__contents">
+      <% tabs.forEach(tab => { %>
+      <div class="p-tab__content js-tab-target <%= tab.isActive ? 'is-active' : '' %>" id="<%= tab.id %>">
+        <%- include(EJS_PATH + 'components/' + tab.content) %>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
