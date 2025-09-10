@@ -1,16 +1,15 @@
-@use 'global' as *;
+@use "global" as *;
 
-@if $startFrom == sp {
-  .u-sp {
+.u-sp {
+    @if $startFrom == sp {
     @include mq() {
       display: none;
     }
-  }
-} @else {
-  .u-sp {
+  } @else {
     display: none;
     @include mq() {
-      display: block;
+      display: block; /* 古いブラウザ用フォールバック */
+      display: revert; /* モダンブラウザではUAスタイルに戻す */
     }
   }
 }
