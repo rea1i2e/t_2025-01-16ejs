@@ -16,7 +16,7 @@
 
 // spデザインの状態を基準にvw変換
 @function vwsp($size) {
-	@return math.div($size, $width-pc) * 100vw;
+	@return math.div($size, $width-sp) * 100vw;
 }
 
 // pcデザインの状態を基準にvw変換

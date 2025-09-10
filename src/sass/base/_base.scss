@@ -9,13 +9,16 @@
 }
 
 :root {
+  --desigh-width: 375;
+  --to-design-vw: calc(100vw / var(--desigh-width) );
   --base-font-family: "Noto Sans JP VF";
-
+  
   --color-black: #333;
   --color-white: #fff;
-
+  
   --header-height: #{rem(60)};
   @include mq() {
+    --desigh-width: 1440;
     --header-height: #{rem(100)};
   }
 }

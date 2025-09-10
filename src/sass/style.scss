@@ -1,5 +1,16 @@
+@use 'global' as *;
 @use "./base/_reset";
 @use "./base/_base";
 @use "./layout/**";
 @use "./components/**/*";
 @use "./utility/**";
+
+.test {
+  width: calc(300 * var(--to-design-vw));
+  width: vwsp(300);
+  background-color: pink;
+  height: 100px;
+  @include mq() {
+    width: vwpc(300);
+  }
+}
