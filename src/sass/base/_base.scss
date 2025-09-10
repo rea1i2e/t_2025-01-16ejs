@@ -1,52 +1,18 @@
-/* リキッドレイアウト対応 */
 @use "global" as *;
 
-html {
-  font-size: 16px;
-
-  @media (max-width: 375px) {
-    font-size: vw(375, 16);
-  }
-
-  @include mq() {
-    font-size: vw($inner-pc + $padding-pc * 2, 16);
-  }
-
-  @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
-    font-size: 16px;
-  }
-
-  @include mq(xl) {
-    font-size: 16px;
-  }
+@font-face {
+  font-family: "Noto Sans JP VF";
+  src: url("../../fonts/NotoSansJP-VF.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
 }
 
-//PCファースト
-// html {
-//   font-size: 16px;
-
-//   @include mq(xl) {
-//     font-size: 16px;
-//   }
-
-//   @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
-//     font-size: vw($inner-pc + $padding-pc * 2, 16);
-//   }
-
-//   @include mq() {
-//     font-size: 16px;
-//   }
-
-//   @media (max-width: 375px) {
-//     font-size: vw(375, 16);
-//   }
-// }
-
 :root {
-  --base-font-family: "";
+  --base-font-family: "Noto Sans JP VF";
 
-  --color-black: #1a1a1a;
-  --color-white: #f7f8f8;
+  --color-black: #333;
+  --color-white: #fff;
 
   --header-height: #{rem(60)};
   @include mq() {
@@ -54,15 +20,50 @@ html {
   }
 }
 
+/* リキッドレイアウト */
+html {
+  font-size: 16px;
+
+  @if $startFrom == sp {
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+    }
+
+    @include mq() {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+    }
+
+    @media (min-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: 16px;
+    }
+  } @else {
+    @media (max-width: #{$inner-pc + $padding-pc * 2}px) {
+      font-size: vw($inner-pc + $padding-pc * 2, 16);
+    }
+
+    @include mq() {
+      font-size: 16px;
+    }
+
+    @media (max-width: 375px) {
+      font-size: vw(375, 16);
+    }
+  }
+}
+
+/* スムーススクロール */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
 /* pcの電話番号発信対応 */
-@if $startFrom == sp {
-  a[href^="tel:"] {
+a[href^="tel:"] {
+  @if $startFrom == sp {
     @include mq() {
       pointer-events: none;
     }
-  }
-} @else {
-  a[href^="tel:"] {
+  } @else {
     pointer-events: none;
     @include mq() {
       pointer-events: initial;
@@ -71,14 +72,7 @@ html {
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.3s;
-}
-
-/* フォーカスされている要素を明確に示す */
-a:focus-visible {
-  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
 }
 
 @media (any-hover: hover) {
@@ -87,10 +81,10 @@ a:focus-visible {
   }
 }
 
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height);
+a:focus-visible {
+  opacity: 0.7;
 }
+
 
 body {
   container-type: inline-size;
