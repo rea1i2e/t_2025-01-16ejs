@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "setting" as *;
 
 // 数値のみを取り出す
 // 参照：https://css-tricks.com/snippets/sass/strip-unit-function/
@@ -13,28 +14,27 @@
   @return math.div($size, $window_width) * 100vw;
 }
 
-// 画面幅375pxの状態を基準にvw変換
-@function vwl($size) {
-	@return math.div($size, 375) * 100vw;
+// spデザインの状態を基準にvw変換
+@function vwsp($size) {
+	@return math.div($size, $width-pc) * 100vw;
 }
 
-// 画面幅1920pxの状態を基準にvw変換
-@function vws($size) {
-	@return math.div($size, 1920) * 100vw;
+// pcデザインの状態を基準にvw変換
+@function vwpc($size) {
+	@return math.div($size, $width-pc) * 100vw;
 }
 
 
-// 画面幅1920pxの状態を基準にvw変換（1920pxの状態異常には拡大しない）
-@function maxvwl($size) {
+//  pcデザインの状態を基準にvw変換（1920pxの状態異常には拡大しない）
+@function maxvwpc($size) {
   @if $size < 0 {
     // マイナスの値が入力された場合
-    @return max((math.div($size, 1920) * 100vw), #{$size}px);
+    @return max((math.div($size, $width-pc) * 100vw), #{$size}px);
   } @else {
     // マイナスの値が入力されなかった場合
-    @return min((math.div($size, 1920) * 100vw), #{$size}px);
+    @return min((math.div($size, $width-pc) * 100vw), #{$size}px);
   }
 }
-
 
 // remへの計算式（16pxを基準としている。10pxを基準とする場合は16を10に変更する）
 @function rem($pixels) {

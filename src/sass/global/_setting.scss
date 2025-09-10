@@ -1,13 +1,11 @@
-@use "sass:math";
-
 // デザインカンプ
-// pc
+$width-pc: 1440;
+$width-sp: 375;
 // sp
 
 // インナー幅設定
 $inner-pc: 1100;
 $inner-sp: 540;
-// ※キュンパス幅ではなくインナーの幅を指す
 
 // 余白
 $padding-pc: 25;
