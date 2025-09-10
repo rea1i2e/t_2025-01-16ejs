@@ -133,13 +133,13 @@ jobs:
             
             **🔍 バリデーション結果:**
             ${{ steps.html_validation.outputs.html_result }}
-            **エラーの数**: ${{ steps.html_validation.outputs.html_error_count }}
-            
-            ${{ steps.html_validation.outputs.html_details && format('```
-            {0}
-            ```', steps.html_validation.outputs.html_details) || '' }}
-            
-            ${{ (steps.html_validation.outputs.html_status == 'failed') && format('詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
+            **エラーの数**: ${{ steps.html_validation.outputs.html_error_count }}${{ steps.html_validation.outputs.html_details && format('
+
+```
+{0}
+```', steps.html_validation.outputs.html_details) || '' }}${{ (steps.html_validation.outputs.html_status == 'failed') && format('
+
+詳細ログ: https://github.com/{0}/actions/runs/{1}', github.repository, github.run_id) || '' }}
             
             ✅ サイトが正常にアップデートされました！
 

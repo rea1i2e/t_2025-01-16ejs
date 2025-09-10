@@ -1,5 +1,3 @@
-console.log("dialog.jsからこんにちは！");
-
 const initializeModal = (modal) => {
   // モーダル要素が見つからない場合はエラーをログに記録して早期リターン
   if (!modal) {
